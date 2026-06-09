@@ -230,6 +230,60 @@ border-radius: 8px;
 padding: 1rem;
 background: var(--light);
 }
+.charts-container {
+display: none;
+grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+gap: 1rem;
+margin: 1.5rem 0;
+}
+.stats-status {
+margin: 1rem 0 0.5rem 0;
+padding: 0.85rem 1rem;
+border-radius: 8px;
+background: #fff5f5;
+border: 1px solid #f5c6cb;
+color: #842029;
+font-size: 0.95rem;
+}
+.chart-card {
+background: #ffffff;
+border: 1px solid var(--border);
+padding: 1rem;
+border-radius: 10px;
+text-align: center;
+}
+.chart-card h4 {
+margin: 0 0 0.75rem 0;
+font-size: 1rem;
+}
+.pie-chart {
+width: 140px;
+height: 140px;
+margin: 0 auto 0.75rem auto;
+transform: rotate(-90deg);
+}
+.pie-center {
+font-size: 0.9rem;
+font-weight: 700;
+color: var(--dark);
+}
+.chart-bar-label {
+font-size: 0.9rem;
+margin: 0.4rem 0 0.2rem 0;
+text-align: left;
+}
+.chart-bar-track {
+width: 100%;
+background: #eee;
+border-radius: 999px;
+height: 14px;
+overflow: hidden;
+}
+.chart-bar-fill {
+height: 100%;
+background: var(--accent);
+border-radius: 999px;
+}
 .response-card {
 background: #ffffff;
 padding: 1.25rem;
@@ -258,7 +312,13 @@ color: var(--accent);
 margin-bottom: 1.5rem;
 }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script type="module">
+  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+  window.supabaseCreateClient = function(url, key) {
+    return createClient(url, key);
+  };
+  window.supabaseModuleLoaded = true;
+</script>
 </head>
 <body>
 
@@ -515,7 +575,7 @@ David V.
 </div>
 
 <div class="form-group">
-<label>25. Scrie un gând sau o părere despre chestionarul dat.prezentarea expusă:</label>
+<label>25. Sti pe cineva care a consumat vreodată droguri?</label>
 <textarea id="q25" placeholder="Părerea ta contează..."></textarea>
 </div>
 
@@ -529,7 +589,10 @@ David V.
 <div class="section success-screen">
 <div class="success-icon">✓</div>
 <h2>Formularul a fost trimis!</h2>
-<button class="btn" type="button" onclick="navigateTo('homePage')">Revino la pagina principala</button>
+<div style="display:flex; gap:0.75rem; justify-content:center; margin-top:1rem;">
+    <button class="btn btn-accent" type="button" onclick="viewLastSubmission()">Vezi răspunsul trimis</button>
+    <button class="btn" type="button" onclick="navigateTo('homePage')">Revino la pagina principala</button>
+</div>
 </div>
 </div>
 
@@ -546,12 +609,14 @@ David V.
 <h4>Au fost oferte (Q4)</h4>
 <div id="q4Stats" class="value">0%</div>
 </div>
-
-<h3>Toate răspunsurile</h3>
-<div id="responsesList" class="response-list"></div>
-
-<button class="btn btn-secondary" type="button" onclick="clearDataWithCode()" style="background-color: #e74c3c; margin-top: 2rem;">Șterge integral datele (Necesită Cod)</button>
-
+<div id="statsStatus" class="stats-status">Se încarcă datele...</div>
+<div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; margin-top:1rem;">
+  <button class="btn btn-accent" type="button" onclick="updateStats()" style="width:auto; padding:0.9rem 1.2rem;">Reîncarcă datele</button>
+  <button class="btn btn-secondary" type="button" onclick="toggleQuestionCharts()" style="width:auto; padding:0.9rem 1.2rem;">Diagrame statistici</button>
+  <button class="btn btn-secondary" type="button" onclick="clearDataWithCode()" style="width:auto; padding:0.9rem 1.2rem; background-color:#e74c3c;">Șterge toate răspunsurile (cod)</button>
+</div>
+<div id="chartsContainer" class="charts-container" style="display:none;"></div>
+<div id="responsesList" class="responses-list" style="margin-top:1rem;"></div>
 <!-- Modal pentru detalii răspuns -->
 <div id="detailModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:9999;">
   <div style="background:white; max-width:700px; width:90%; margin:auto; padding:1.5rem; border-radius:8px; position:relative;">
@@ -579,10 +644,41 @@ var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSI
 var supabaseClient = null;
 var realtimeChannel = null;
 
-try {
-    if (window.supabase && SUPABASE_URL.indexOf("PROIECTUL") === -1) {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+function initSupabase() {
+    if (supabaseClient) return;
+    try {
+        if (window.supabaseCreateClient) {
+            supabaseClient = window.supabaseCreateClient(SUPABASE_URL, SUPABASE_KEY);
+            console.log('Supabase client inițializat cu createClient importat.');
+            return;
+        }
+
+        console.log('Supabase globals:', typeof supabase, typeof Supabase, typeof window.supabase, typeof window.Supabase, typeof window.supabaseCreateClient);
+        var supabaseLib = null;
+        if (typeof supabase !== 'undefined') {
+            supabaseLib = supabase;
+        } else if (typeof Supabase !== 'undefined') {
+            supabaseLib = Supabase;
+        } else if (window.supabase) {
+            supabaseLib = window.supabase;
+        } else if (window.Supabase) {
+            supabaseLib = window.Supabase;
+        }
+
+        if (supabaseLib && SUPABASE_URL.indexOf("PROIECTUL") === -1 && typeof supabaseLib.createClient === 'function') {
+            supabaseClient = supabaseLib.createClient(SUPABASE_URL, SUPABASE_KEY);
+            console.log('Supabase client inițializat cu succes.');
+        } else if (!supabaseLib) {
+            console.log('Supabase nu a fost găsit în pagina curentă.');
+        }
+    } catch (err) {
+        console.log('Supabase init error:', err);
+        supabaseClient = null;
     }
+}
+
+try {
+    initSupabase();
 } catch (err) {
     console.log("Supabase ignorat - Mod Local Activat.");
 }
@@ -638,6 +734,7 @@ function getCheckboxValues(name) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
+    initSupabase();
     if (supabaseClient) {
         setupRealtime();
     }
@@ -683,13 +780,21 @@ document.getElementById('antiDrogForm').addEventListener('submit', function(e) {
     if (supabaseClient) {
         supabaseClient.from('raspunsuri').insert([record]).then(function(res) {
             if (res.error) throw res.error;
+            try {
+                var inserted = res.data && res.data[0] ? res.data[0] : null;
+                if (inserted && inserted.id !== undefined) {
+                    lastSubmitted = { id: String(inserted.id), source: 'cloud' };
+                }
+            } catch (e) { console.warn('Could not parse insert response', e); }
             finalizareTrimitere();
         }).catch(function(err) {
             salvareLocala(record);
+            lastSubmitted = { id: record._id, source: 'local' };
             finalizareTrimitere();
         });
     } else {
         salvareLocala(record);
+        lastSubmitted = { id: record._id, source: 'local' };
         finalizareTrimitere();
     }
 });
@@ -701,6 +806,8 @@ function finalizareTrimitere() {
 
 var lastLoadedData = [];
 var lastLoadedSource = 'local';
+var chartsVisible = false;
+var lastSubmitted = null;
 
 function salvareLocala(record) {
     var db = JSON.parse(localStorage.getItem('antiDrogData2')) || [];
@@ -714,15 +821,28 @@ function updateStats() {
     for (var i = 0; i < local.length; i++) { if (!local[i]._id) local[i]._id = 'local_' + (new Date().getTime()) + '_' + Math.random().toString(36).slice(2,9); }
     localStorage.setItem('antiDrogData2', JSON.stringify(local));
 
+    initSupabase();
+    setStatsStatus('Încarcare date din baza publică...');
     if (supabaseClient) {
         supabaseClient.from('raspunsuri').select('*').then(function(res) {
-            if (res.error) throw res.error;
-            var cloudData = res.data || [];
-            if (cloudData.length === 0 && local.length > 0) {
-                console.log('Cloud returned no rows; displaying local stored answers instead.');
+            if (res.error) {
+                console.log('Supabase error:', res.error);
+                if (res.error.message) {
+                    setStatsStatus('Eroare Supabase: ' + res.error.message);
+                } else {
+                    setStatsStatus('Eroare Supabase necunoscută; afișez local.');
+                }
+                supabaseClient = null;
                 afiseazaDate(local, 'local');
                 return;
             }
+            var cloudData = res.data || [];
+            if (cloudData.length === 0) {
+                setStatsStatus('Nu s-au găsit răspunsuri în cloud; afișez date locale.');
+                afiseazaDate(local, 'local');
+                return;
+            }
+            setStatsStatus('Datele din cloud au fost încărcate.');
             var merged = cloudData.slice();
             for (var j = 0; j < local.length; j++) {
                 merged.push(local[j]);
@@ -730,26 +850,78 @@ function updateStats() {
             afiseazaDate(merged, 'cloud');
         }).catch(function(err) {
             console.log('Cloud select error:', err);
+            setStatsStatus('Eroare la conectare Supabase; afișez local. ' + (err.message || err));
+            supabaseClient = null;
             afiseazaDate(local, 'local');
         });
     } else {
+        setStatsStatus('Supabase indisponibil; afișez date locale.');
         afiseazaDate(local, 'local');
     }
+}
+
+function getElement(id) {
+    return document.getElementById(id);
+}
+
+function setStatsStatus(message) {
+    var statusEl = getElement('statsStatus');
+    if (statusEl) {
+        statusEl.innerText = message;
+    } else {
+        console.warn('statsStatus element missing:', message);
+    }
+}
+
+function toggleQuestionCharts() {
+    chartsVisible = !chartsVisible;
+    var container = getElement('chartsContainer');
+    if (!container) return;
+    if (chartsVisible) {
+        container.style.display = 'grid';
+        renderStatsCharts(lastLoadedData);
+        setStatsStatus('Afișez diagramele fiecarei întrebări.');
+    } else {
+        container.style.display = 'none';
+        setStatsStatus('Diagramele sunt ascunse.');
+    }
+}
+
+function setInnerHTML(id, html) {
+    var el = getElement(id);
+    if (!el) {
+        console.warn('Missing element for setInnerHTML:', id);
+        return;
+    }
+    el.innerHTML = html;
+}
+
+function setInnerText(id, text) {
+    var el = getElement(id);
+    if (!el) {
+        console.warn('Missing element for setInnerText:', id);
+        return;
+    }
+    el.innerText = text;
 }
 
 function afiseazaDate(dateAnalizate, source) {
     lastLoadedData = dateAnalizate || [];
     lastLoadedSource = source || 'local';
-    document.getElementById('totalCount').innerText = lastLoadedData.length;
+    setInnerText('totalCount', lastLoadedData.length);
     if (lastLoadedData.length === 0) {
-        document.getElementById('q4Stats').innerText = "0%";
-        document.getElementById('responsesList').innerHTML = '<p style="text-align:center; padding:1rem;">Niciun răspuns încă.</p>';
+        setInnerText('q4Stats', "0%");
+        setInnerHTML('chartsContainer', '<p style="text-align:center; padding:1rem;">Niciun grafic disponibil.</p>');
+        setInnerHTML('responsesList', '<p style="text-align:center; padding:1rem;">Niciun răspuns încă.</p>');
         return;
     }
     var auVazutDroguri = 0;
     for (var i = 0; i < lastLoadedData.length; i++) { if (lastLoadedData[i].q4 === 'Da') auVazutDroguri++; }
     var proc = Math.round((auVazutDroguri / lastLoadedData.length) * 100);
     document.getElementById('q4Stats').innerText = proc + "%";
+    if (chartsVisible) {
+        renderStatsCharts(lastLoadedData);
+    }
     var htmlContent = '';
     for (var j = 0; j < lastLoadedData.length; j++) {
         var r = lastLoadedData[j];
@@ -760,13 +932,14 @@ function afiseazaDate(dateAnalizate, source) {
         htmlContent += '<div class="response-details">';
         htmlContent += '<strong>Q4 (Contact):</strong> ' + ascunde(r.q4) + ' | ' + '<strong>Q15 (Reacție):</strong> ' + ascunde(r.q15) + '<br>' + '<strong>Mesaj:</strong> ' + ascunde(r.q25);
         htmlContent += '</div>';
-        htmlContent += '<div style="margin-top:0.75rem; text-align:right;">';
-        htmlContent += '<button class="btn btn-secondary" style="width:auto; padding:0.5rem 0.75rem;" data-action="delete">Șterge</button>';
+        htmlContent += '<div style="margin-top:0.75rem; text-align:right; display:flex; gap:0.5rem; justify-content:flex-end; flex-wrap:wrap;">';
+        htmlContent += '<button class="btn btn-secondary" style="width:auto; padding:0.5rem 0.75rem;" data-action="view">Vezi</button>';
+        htmlContent += '<button class="btn btn-secondary" style="width:auto; padding:0.5rem 0.75rem; background-color:#e74c3c;" data-action="delete">Șterge</button>';
         htmlContent += '</div>';
         htmlContent += '</div>';
     }
-    document.getElementById('responsesList').innerHTML = htmlContent;
-    var responsesListEl = document.getElementById('responsesList');
+    setInnerHTML('responsesList', htmlContent);
+    var responsesListEl = getElement('responsesList');
     if (responsesListEl) {
         responsesListEl.onclick = function(e) {
             var card = e.target.closest('.response-card');
@@ -774,10 +947,99 @@ function afiseazaDate(dateAnalizate, source) {
             var rid = card.getAttribute('data-rid');
             var src = card.getAttribute('data-src');
             var btn = e.target.closest('button[data-action="delete"]');
-            if (btn) { e.stopPropagation(); deleteSingleResponse(rid, src); return; }
-            showResponseDetails(rid, src);
+            if (btn) {
+            e.stopPropagation();
+            var action = btn.getAttribute('data-action');
+            if (action === 'delete') {
+                deleteSingleResponse(rid, src);
+            } else {
+                showResponseDetails(rid, src);
+            }
+            return;
+        }
+        showResponseDetails(rid, src);
         };
     }
+}
+
+function renderStatsCharts(data) {
+    var total = data.length;
+    var questionDefs = [
+        { key: 'varsta', label: 'Vârstă', type: 'single', options: ['Sub 14 ani','14-16 ani','16-18 ani','Peste 18 ani','Altul'] },
+        { key: 'q3', label: 'Problema consumului este majoră?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q4', label: 'Ți s-a oferit substanță?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q5', label: 'Cunoști persoane cărora le poți cere sprijin?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q6', label: 'Presiunea grupului este principalul motiv?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q7', label: 'Tutun sau alcool facilitează trecerea?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q8', label: 'Drogurile sintetice sunt mai periculoase?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q9', label: 'Ai participat la campanii de informare?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q10', label: 'Fumatul ocazional poate provoca dependență?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q11', label: 'Ai discuta cu părinții în cazul unei probleme?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q12', label: 'Legislația pedepsește deținerea?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q13', label: 'O singură doză este inofensivă?', type: 'single', options: ['Da','Nu, poate fi fatală'] },
+        { key: 'q14', label: 'Mass-media oferă informații realist?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q15', label: 'Ce faci dacă ești presat să încerci o pastilă?', type: 'single', options: ['Refuz ferm','Accept din curiozitate','Părăsesc locația imediat'] },
+        { key: 'q16', label: 'Drogurile afectează performanța școlară?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q17', label: 'Problemele din familie duc la consum?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q18', label: 'Știai de linia TelVerde anti-drog?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q19', label: 'Un dependent se poate recupera singur?', type: 'single', options: ['Da','Nu'] },
+        { key: 'q20', label: 'Refuzi influențele negative?', type: 'single', options: ['Da, îmi asum','Sunt indecis/ă'] },
+        { key: 'q21', label: 'Surse sigure pentru informare', type: 'multi', options: ['Medici','Prieteni','Scoală','Internet'] },
+        { key: 'q22', label: 'Ce consecințe te îngrijorează', type: 'multi', options: ['Sănătate','Închisoare','Familie'] },
+        { key: 'q23', label: 'Accesul la substanțe este', type: 'single', options: ['Foarte usor','Greu'] },
+        { key: 'q24', label: 'Pedepsitele ar trebui să fie mai aspre?', type: 'single', options: ['Da','Nu'] }
+    ];
+
+    function buildBarCard(label, counts, totalForPercent) {
+        var html = '<div class="chart-card"><h4>' + label + '</h4>';
+        for (var opt in counts) {
+            if (!counts.hasOwnProperty(opt)) continue;
+            var value = counts[opt];
+            var percent = totalForPercent > 0 ? Math.round((value / totalForPercent) * 100) : 0;
+            html += '<div class="chart-bar-label">' + ascunde(opt) + ' (' + value + ')</div>';
+            html += '<div class="chart-bar-track"><div class="chart-bar-fill" style="width:' + percent + '%"></div></div>';
+        }
+        html += '</div>';
+        return html;
+    }
+
+    var chartsHtml = '';
+    for (var qi = 0; qi < questionDefs.length; qi++) {
+        var q = questionDefs[qi];
+        var counts = {};
+        for (var oi = 0; oi < q.options.length; oi++) {
+            counts[q.options[oi]] = 0;
+        }
+        var totalForPercent = 0;
+
+        for (var i = 0; i < data.length; i++) {
+            var item = data[i];
+            if (q.type === 'multi') {
+                var raw = item[q.key] || '';
+                var parts = String(raw).split(',');
+                for (var pi = 0; pi < parts.length; pi++) {
+                    var opt = parts[pi].trim();
+                    if (!opt) continue;
+                    if (counts[opt] !== undefined) {
+                        counts[opt]++;
+                    }
+                }
+                totalForPercent = data.length;
+            } else {
+                var value = item[q.key] || '';
+                if (counts[value] !== undefined) {
+                    counts[value]++;
+                } else if (value) {
+                    counts[value] = (counts[value] || 0) + 1;
+                }
+                totalForPercent = data.length;
+            }
+        }
+
+        chartsHtml += buildBarCard(q.label, counts, totalForPercent);
+    }
+
+    setInnerHTML('chartsContainer', chartsHtml);
 }
 
 function showResponseDetails(id, source) {
@@ -827,6 +1089,30 @@ function deleteSingleResponse(id, source) {
         updateStats();
         closeDetailModal();
     }
+}
+
+function viewLastSubmission() {
+    if (!lastSubmitted) { alert('Nu există informații despre ultima trimitere.'); return; }
+    var id = String(lastSubmitted.id);
+    var source = lastSubmitted.source || 'local';
+    if (source === 'local') {
+        var local = JSON.parse(localStorage.getItem('antiDrogData2')) || [];
+        for (var i = 0; i < local.length; i++) { if (String(local[i]._id) === id) { showResponseDetails(id, 'local'); return; } }
+        alert('Răspunsul local nu a fost găsit.');
+        return;
+    }
+    // source === 'cloud'
+    for (var j = 0; j < lastLoadedData.length; j++) { if (lastLoadedData[j].id !== undefined && String(lastLoadedData[j].id) === id) { showResponseDetails(id, 'cloud'); return; } }
+    if (!supabaseClient) { alert('Conexiune cloud indisponibilă pentru a prelua răspunsul.'); return; }
+    supabaseClient.from('raspunsuri').select('*').eq('id', id).then(function(res) {
+        if (res.error) { alert('Eroare la preluare: ' + (res.error.message || res.error)); return; }
+        var d = res.data && res.data[0] ? res.data[0] : null;
+        if (!d) { alert('Răspunsul nu a fost găsit în cloud.'); return; }
+        // Temporar adaug în lastLoadedData pentru a putea afișa și valida
+        lastLoadedData = lastLoadedData || [];
+        lastLoadedData.push(d);
+        showResponseDetails(id, 'cloud');
+    }).catch(function(err) { alert('Eroare la preluare: ' + (err.message || err)); });
 }
 
 function clearDataWithCode() {
