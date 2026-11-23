@@ -87,8 +87,8 @@ footer{background:var(--k);color:var(--y);text-align:center;padding:1.5rem;font-
 </style>
 <script type="module">
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-window.supabaseCreateClient=function(u,k){return createClient(u,k)};
-window.supabaseModuleLoaded=true;
+window.supabaseCreateClient = function(u, k) { return createClient(u, k); };
+window.supabaseModuleLoaded = true;
 </script>
 </head>
 <body>
@@ -152,12 +152,12 @@ window.supabaseModuleLoaded=true;
 </div>
 </div>
 
-<button class="btn" type="button" onclick="startForm()">▶ Începe chestionarul (35 întrebări)</button>
+<button class="btn" type="button" onclick="startForm()">▶ Începe chestionarul (17 întrebări)</button>
 <button class="btn s" type="button" onclick="navigateTo('statsPage')">▶ Vezi statisticile live</button>
 </div>
 
 <div id="formPage" class="page">
-<div class="prog"><span id="progTxt">0 / 35</span><i id="progBar"></i></div>
+<div class="prog"><span id="progTxt">0 / 17</span><i id="progBar"></i></div>
 <div class="section" style="margin-top:1.5rem">
 <h2>Chestionar (17 întrebări)</h2>
 <h3>Spune NU astăzi, pentru a putea spune DA viitorului mâine.</h3>
@@ -203,12 +203,11 @@ window.supabaseModuleLoaded=true;
 
 <script>
 var DEV_CODE = "1234admin";
-var SUPABASE_URL = "https://qtibuasmvzukiicbtbum.supabase.co";
-var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0aWJ1YXNtdnp1a2lpY2J0YnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMDEyNDAsImV4cCI6MjA5NjU3NzI0MH0.XyDwvXAppVIvQNUouhSnc_Rqt9bBIrUmFGsHsWnKYqo";
+var SUPABASE_URL = "https://wozhnaqlzqebluibybff.supabase.co";
+var SUPABASE_KEY = "sb_publishable_fFHrXZ3JmHxrQSDSuZrv8g_Z1UpDYPj";
 var supabaseClient = null, realtimeChannel = null, startTime = 0;
 var lastLoadedData = [], lastLoadedSource = 'local', chartsVisible = false, lastSubmitted = null;
 
-/* ===== Întrebări: [cheie, text, tip, opțiuni] tip: text | sel | yn | r | c | txt | rng ===== */
 var YN = ['Da','Nu'];
 var Q = [
 ['nume','Introdu numele tău complet (sau scrie „Anonim”):','text'],
@@ -227,29 +226,10 @@ var Q = [
 ['q14','Simți că primești suficiente informații realiste din mass-media?','yn'],
 ['q15','Cum ai acționa dacă ai fi presat să încerci o pastilă necunoscută la o petrecere?','sel',['Refuz ferm','Accept','Părăsesc locația']],
 ['q16','Crezi că drogurile afectează direct performanța școlară?','yn'],
-['q17','Crezi că problemele din familie pot împinge un tânăr spre consum?','yn'],
-/* ['q18','Știai că există o linie telefonică gratuită (Linia Verde Antidrog)?','yn'],
-['q19','Consideri că un dependent se poate recupera total singur, fără medici?','yn'],
-['q20','Îți iei angajamentul de a refuza influențele negative?','r',[['Da','Da, îmi asum'],['Nu','Sunt indecis/ă']]],
-['q21','Care surse crezi că sunt cele mai sigure pentru informare?','c',['Medici','Prieteni','Scoală','Internet']],
-['q22','Ce consecințe te îngrijorează cel mai mult?','c',['Sănătate','Închisoare','Familie']],
-['q23','Cât de ușor crezi că au acces tinerii la substanțe?','r',[['Foarte usor','Foarte ușor'],['Greu','Relativ greu']]],
-['q24','Crezi că pedepsele pentru trafic ar trebui să fie mai aspre?','yn'],
-['q25','Știi pe cineva care a consumat vreodată droguri?','txt','Părerea ta contează...'],
-['q26','Cât de des vezi pe rețelele sociale conținut care face consumul să pară „cool”?','sel',['Zilnic','Săptămânal','Rar','Niciodată']],
-['q27','Unde crezi că are loc cel mai des primul contact cu substanțele?','c',['Petreceri','Școală','Online','Cartier','Grup de prieteni']],
-['q28','Crezi că țigările electronice (vape) pot fi o poartă de intrare către alte substanțe?','yn'],
-['q29','Cât de bine informat/ă te simți despre efectele drogurilor? (1 = deloc, 10 = foarte bine)','rng'],
-['q30','Ai ști să reacționezi (să suni la 112) dacă un coleg ar avea o reacție gravă după consum?','yn'],
-['q31','Ce ar ajuta cel mai mult la prevenție în școala ta?','c',['Consiliere psihologică','Activități extrașcolare','Povești reale','Controale','Sport și evenimente']],
-['q32','Ai încredere să discuți deschis cu un profesor sau consilier despre acest subiect?','yn'],
-['q33','Ai spune unui prieten să se oprească dacă ai observa că riscă?','yn'],
-['q34','Ce i-ai spune unui prieten care este tentat să încerce?','txt','Scrie-i un mesaj scurt...'],
-['q35','Ce ai schimba tu ca să fie mai puține cazuri în rândul tinerilor?','txt','Ideile tale...'] */
+['q17','Crezi că problemele din familie pot împinge un tânăr spre consum?','yn']
 ];
 
 function esc(v){ if(v===undefined||v===null) return ''; return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-var ascunde = esc;
 function opt(o){ return (typeof o==='string')?[o,o]:o; }
 
 function buildForm(){
@@ -271,6 +251,7 @@ function buildForm(){
   document.getElementById('antiDrogForm').addEventListener('input',progress);
   document.getElementById('antiDrogForm').addEventListener('change',progress);
 }
+
 function isDone(q){
   var k=q[0];
   if(q[2]==='text'||q[2]==='sel'||q[2]==='txt') return document.getElementById(k).value.trim()!=='';
@@ -278,23 +259,21 @@ function isDone(q){
   if(q[2]==='c') return getCheckboxValues(k)!=='';
   return getRadioValue(k)!=='';
 }
+
 function progress(){
   var d=0; for(var i=0;i<Q.length;i++){ if(isDone(Q[i])) d++; }
   document.getElementById('progTxt').innerText=d+' / '+Q.length;
   document.getElementById('progBar').style.width=Math.round(d/Q.length*100)+'%';
 }
 
-/* ===== Supabase ===== */
 function initSupabase(){
   if(supabaseClient) return;
   try{
     if(window.supabaseCreateClient){ supabaseClient=window.supabaseCreateClient(SUPABASE_URL,SUPABASE_KEY); return; }
-    var lib=null;
-    if(window.supabase) lib=window.supabase; else if(window.Supabase) lib=window.Supabase;
+    var lib=window.supabase||window.Supabase;
     if(lib && typeof lib.createClient==='function') supabaseClient=lib.createClient(SUPABASE_URL,SUPABASE_KEY);
   }catch(err){ console.log('Supabase init error:',err); supabaseClient=null; }
 }
-try{ initSupabase(); }catch(e){ console.log('Supabase ignorat - Mod Local Activat.'); }
 
 function setupRealtime(){
   if(!supabaseClient||realtimeChannel) return;
@@ -311,11 +290,16 @@ function navigateTo(id){
   window.scrollTo(0,0);
   if(id==='statsPage') updateStats();
 }
+
 function startForm(){ startTime=new Date().getTime(); navigateTo('formPage'); progress(); }
 function getRadioValue(n){ var el=document.querySelector('input[name="'+n+'"]:checked'); return el?el.value:''; }
 function getCheckboxValues(n){ var v=[],els=document.querySelectorAll('input[name="'+n+'"]:checked'); for(var i=0;i<els.length;i++) v.push(els[i].value); return v.join(', '); }
 
-document.addEventListener('DOMContentLoaded',function(){ buildForm(); initSupabase(); if(supabaseClient) setupRealtime(); });
+document.addEventListener('DOMContentLoaded',function(){
+  buildForm();
+  initSupabase();
+  if(supabaseClient) setupRealtime();
+});
 
 document.getElementById('antiDrogForm').addEventListener('submit',function(e){
   e.preventDefault();
@@ -329,6 +313,7 @@ document.getElementById('antiDrogForm').addEventListener('submit',function(e){
     else record[k]=getRadioValue(k);
   }
   record.ora=ora+' ('+duration+' secunde)';
+  initSupabase();
   if(supabaseClient){
     supabaseClient.from('raspunsuri').insert([record]).select().then(function(res){
       if(res.error) throw res.error;
@@ -363,7 +348,7 @@ function updateStats(){
     supabaseClient.from('raspunsuri').select('*').then(function(res){
       if(res.error){
         setStatsStatus('Eroare Supabase: '+(res.error.message||'necunoscută')+'; afișez local.');
-        supabaseClient=null; afiseazaDate(local,'local'); return;
+        afiseazaDate(local,'local'); return;
       }
       var cloud=res.data||[];
       if(cloud.length===0){ setStatsStatus('Nu s-au găsit răspunsuri în cloud; afișez date locale.'); afiseazaDate(local,'local'); return; }
@@ -373,7 +358,7 @@ function updateStats(){
       afiseazaDate(merged,'cloud');
     }).catch(function(err){
       setStatsStatus('Eroare la conectare Supabase; afișez local. '+(err.message||err));
-      supabaseClient=null; afiseazaDate(local,'local');
+      afiseazaDate(local,'local');
     });
   }else{
     setStatsStatus('Supabase indisponibil; afișez date locale.');
@@ -411,7 +396,7 @@ function afiseazaDate(data,source){
     var rid=(r.id!==undefined)?String(r.id):String(r._id||(r._id='local_'+(new Date().getTime())+'_'+Math.random().toString(36).slice(2,9)));
     var src=(r.id!==undefined)?'cloud':'local';
     h+='<div class="rc" data-rid="'+esc(rid)+'" data-src="'+src+'"><div class="rh">#'+(j+1)+' - '+esc(r.nume)+' | '+esc(r.ora)+'</div>';
-    h+='<div><strong>Q4:</strong> '+esc(r.q4)+' | <strong>Q15:</strong> '+esc(r.q15)+'<br><strong>Mesaj:</strong> '+esc(r.q25)+'</div>';
+    h+='<div><strong>Q4:</strong> '+esc(r.q4)+' | <strong>Q15:</strong> '+esc(r.q15)+'</div>';
     h+='<div style="text-align:right"><button class="btn sm s" data-action="view">Vezi</button><button class="btn sm d" data-action="delete">Șterge</button></div></div>';
   }
   setInnerHTML('responsesList',h);
@@ -465,6 +450,7 @@ function showResponseDetails(id,source){
   var del=getElement('detailDeleteBtn'); del.style.display=''; del.onclick=function(){ deleteSingleResponse(id,source); };
   getElement('detailModal').style.display='flex';
 }
+
 function closeDetailModal(){ getElement('detailModal').style.display='none'; var b=getElement('detailDeleteBtn'); if(b) b.style.display=''; }
 
 function requireDeleteCode(){
@@ -489,11 +475,6 @@ function deleteSingleResponse(id,source){
   }
 }
 
-function viewLastSubmission(){
-  if(!lastSubmitted){ alert('Nu există informații despre ultima trimitere.'); return; }
-  showResponseDetails(String(lastSubmitted.id),lastSubmitted.source||'local');
-}
-
 function clearDataWithCode(){ if(requireDeleteCode()) showBulkDeleteModal(); }
 
 function showBulkDeleteModal(){
@@ -501,28 +482,41 @@ function showBulkDeleteModal(){
   var h='<h3>Selectează răspunsurile de șters</h3><div style="max-height:60vh;overflow:auto">';
   for(var i=0;i<data.length;i++){
     var it=data[i], rid=it.id!==undefined?String(it.id):String(it._id), src=it.id!==undefined?'cloud':'local';
-    h+='<label style="display:block;margin-bottom:.5rem"><input type="checkbox" class="bulk-delete-cb" data-rid="'+esc(rid)+'" data-src="'+src+'"> #'+(i+1)+' - '+esc(it.nume||'Anonim')+' | '+esc(it.ora||'')+'</label>';
+    h+='<label class="opt"><input type="checkbox" class="bulkDelCb" data-rid="'+esc(rid)+'" data-src="'+src+'"> #'+(i+1)+' - '+esc(it.nume||'Anonim')+' ('+esc(it.ora||'')+')</label>';
   }
-  h+='</div><div style="margin-top:1rem;text-align:right"><button class="btn sm d" onclick="performBulkDelete()">Șterge selectate</button><button class="btn sm" onclick="closeDetailModal()">Anulează</button></div>';
+  h+='</div><div style="margin-top:1rem;text-align:right"><button type="button" class="btn sm d" onclick="runBulkDelete()">Șterge selectate</button></div>';
   getElement('detailContent').innerHTML=h;
-  getElement('detailDeleteBtn').style.display='none';
+  var del=getElement('detailDeleteBtn'); if(del) del.style.display='none';
   getElement('detailModal').style.display='flex';
 }
 
-function performBulkDelete(){
-  var cbs=document.querySelectorAll('.bulk-delete-cb:checked');
-  if(!cbs.length){ alert('Nu s-a selectat niciun răspuns.'); return; }
-  if(!confirm('Ștergi '+cbs.length+' răspunsuri?')) return;
-  var keep=JSON.parse(localStorage.getItem('antiDrogData2'))||[], cloudIds=[];
-  for(var i=0;i<cbs.length;i++){
-    var rid=cbs[i].getAttribute('data-rid'), src=cbs[i].getAttribute('data-src');
-    if(src==='local'){ for(var k=0;k<keep.length;k++){ if(String(keep[k]._id)===rid){ keep.splice(k,1); k--; } } }
-    else cloudIds.push(rid);
+function runBulkDelete(){
+  var boxes=document.querySelectorAll('.bulkDelCb:checked');
+  if(!boxes.length){ alert('Nu ai selectat nimic.'); return; }
+  if(!confirm('Ștergi '+boxes.length+' răspunsuri?')) return;
+  var local=JSON.parse(localStorage.getItem('antiDrogData2'))||[];
+  var cloudIds=[];
+  var localIds=[];
+  for(var i=0;i<boxes.length;i++){
+    var rid=boxes[i].getAttribute('data-rid'), src=boxes[i].getAttribute('data-src');
+    if(src==='cloud') cloudIds.push(rid);
+    else localIds.push(rid);
   }
-  localStorage.setItem('antiDrogData2',JSON.stringify(keep));
-  if(cloudIds.length&&supabaseClient){
-    supabaseClient.from('raspunsuri').delete().in('id',cloudIds).then(function(){ alert('Ștergere finalizată.'); updateStats(); closeDetailModal(); }).catch(function(err){ alert('Eroare la ștergere cloud: '+(err.message||err)); updateStats(); closeDetailModal(); });
-  }else{ alert('Ștergere finalizată.'); updateStats(); closeDetailModal(); }
+  var keptLocal=[];
+  for(var j=0;j<local.length;j++){
+    if(localIds.indexOf(String(local[j]._id))===-1) keptLocal.push(local[j]);
+  }
+  localStorage.setItem('antiDrogData2',JSON.stringify(keptLocal));
+  if(cloudIds.length && supabaseClient){
+    supabaseClient.from('raspunsuri').delete().in('id',cloudIds).then(function(){
+      closeDetailModal(); updateStats();
+    }).catch(function(err){
+      alert('Eroare ștergere cloud: '+(err.message||err));
+      closeDetailModal(); updateStats();
+    });
+  }else{
+    closeDetailModal(); updateStats();
+  }
 }
 </script>
 </body>
