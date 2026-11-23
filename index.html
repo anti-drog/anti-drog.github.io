@@ -3,1180 +3,527 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Viața are Prioritate - Spune NU Drogurilor!</title>
+<title>VIAȚA ARE PRIORITATE — Spune NU!</title>
 <style>
-:root {
---primary: #e74c3c;
---primary-hover: #c0392b;
---dark: #1a252f;
---dark-light: #2c3e50;
---light: #f8f9fa;
---accent: #16a085;
---text: #333333;
---card-bg: #ffffff;
---border: #e2e8f0;
-}
-*, *::before, *::after {
-box-sizing: border-box;
-}
-body {
-font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-line-height: 1.6;
-margin: 0;
-padding: 0;
-background-color: var(--light);
-color: var(--text);
-overflow-x: hidden;
-}
-.banner-placeholder {
-width: 100%;
-min-height: 250px;
-background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-color: #ffffff;
-display: block;
-text-align: center;
-padding: 0;
-border-bottom: 5px solid var(--primary);
-overflow: hidden;
-}
-.banner-placeholder img {
-display: block;
-width: 100%;
-height: auto;
-max-height: 420px;
-object-fit: contain;
-margin: 0 auto;
-background: linear-gradient(135deg, #2c3e50 0%, #1a252f 100%);
-}
-.banner-placeholder h1 {
-font-size: 2.5rem;
-margin: 0 0 1rem 0;
-text-transform: uppercase;
-letter-spacing: 1px;
-font-weight: 800;
-}
-.banner-placeholder p {
-font-size: 1.2rem;
-margin: 0 auto;
-max-width: 600px;
-opacity: 0.9;
-}
-.container {
-max-width: 1000px;
-margin: 0 auto;
-padding: 3rem 1.5rem;
-}
-.page {
-display: none;
-}
-.page.active {
-display: block;
-animation: fadeIn 0.4s ease-in-out forwards;
-}
-@keyframes fadeIn {
-from { opacity: 0; transform: translateY(10px); }
-to { opacity: 1; transform: translateY(0); }
-}
-.section {
-background: var(--card-bg);
-padding: 2.5rem;
-border-radius: 12px;
-box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-margin-bottom: 2.5rem;
-border: 1px solid var(--border);
-}
-h2 {
-color: var(--dark);
-font-size: 1.8rem;
-margin-top: 0;
-margin-bottom: 1.5rem;
-padding-bottom: 0.75rem;
-border-bottom: 4px solid var(--primary);
-display: inline-block;
-}
-p {
-font-size: 1.05rem;
-color: #555;
-margin-bottom: 1.5rem;
-}
-.grid-info {
-display: block;
-margin-top: 2rem;
-}
-.info-card {
-background: #fff8f8;
-border-left: 5px solid var(--primary);
-padding: 1.5rem;
-margin-bottom: 1.2rem;
-border-radius: 0 8px 8px 0;
-}
-.info-card strong {
-color: var(--primary);
-font-size: 1.1rem;
-display: block;
-margin-bottom: 0.5rem;
-}
-.collaborators-grid {
-display: block;
-margin-top: 2rem;
-}
-.collaborator-item {
-background: var(--light);
-padding: 1.5rem;
-border-radius: 8px;
-margin-bottom: 1rem;
-border: 1px solid var(--border);
-font-size: 1.1rem;
-font-weight: bold;
-color: var(--dark-light);
-}
-.collaborator-title {
-display: block;
-font-size: 0.9rem;
-color: #7f8c8d;
-font-weight: normal;
-margin-top: 0.25rem;
-}
-.btn {
-display: block;
-width: 100%;
-background-color: var(--primary);
-color: white;
-border: none;
-padding: 1.2rem 2rem;
-font-size: 1.2rem;
-font-weight: bold;
-border-radius: 8px;
-cursor: pointer;
-text-align: center;
-text-transform: uppercase;
-margin-top: 1rem;
-}
-.btn:hover {
-background-color: var(--primary-hover);
-}
-.btn-secondary {
-background-color: var(--dark-light);
-}
-.btn-secondary:hover {
-background-color: var(--dark);
-}
-.btn-accent {
-background-color: var(--accent);
-margin-top: 1.5rem;
-}
-.form-group {
-margin-bottom: 2rem;
-background: var(--light);
-padding: 1.5rem;
-border-radius: 8px;
-border: 1px solid var(--border);
-}
-.form-group label {
-display: block;
-font-weight: bold;
-margin-bottom: 1rem;
-font-size: 1.1rem;
-}
-input[type="text"], select, textarea {
-width: 100%;
-padding: 0.85rem;
-border: 2px solid var(--border);
-border-radius: 6px;
-font-size: 1rem;
-}
-textarea {
-resize: vertical;
-min-height: 100px;
-}
-.radio-stack, .checkbox-stack {
-display: block;
-}
-.radio-label, .checkbox-label {
-display: block;
-position: relative;
-padding: 0.75rem 1rem 0.75rem 2.5rem;
-margin-bottom: 0.5rem;
-cursor: pointer;
-background: #ffffff;
-border: 1px solid var(--border);
-border-radius: 6px;
-}
-.radio-label input, .checkbox-label input {
-position: absolute;
-left: 1rem;
-top: 50%;
-transform: translateY(-50%);
-margin: 0;
-}
-.stats-container {
-background: #ffffff;
-border-radius: 12px;
-margin-top: 2rem;
-}
-.stat-card {
-background: var(--light);
-padding: 1.5rem;
-border-radius: 8px;
-border-left: 5px solid var(--accent);
-margin-bottom: 1rem;
-}
-.stat-card h4 {
-margin: 0 0 0.5rem 0;
-color: #7f8c8d;
-text-transform: uppercase;
-}
-.stat-card .value {
-font-size: 1.8rem;
-font-weight: bold;
-color: var(--dark);
-}
-.response-list {
-margin-top: 2rem;
-max-height: 500px;
-overflow-y: auto;
-border: 1px solid var(--border);
-border-radius: 8px;
-padding: 1rem;
-background: var(--light);
-}
-.charts-container {
-display: none;
-grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-gap: 1rem;
-margin: 1.5rem 0;
-}
-.stats-status {
-margin: 1rem 0 0.5rem 0;
-padding: 0.85rem 1rem;
-border-radius: 8px;
-background: #fff5f5;
-border: 1px solid #f5c6cb;
-color: #842029;
-font-size: 0.95rem;
-}
-.chart-card {
-background: #ffffff;
-border: 1px solid var(--border);
-padding: 1rem;
-border-radius: 10px;
-text-align: center;
-}
-.chart-card h4 {
-margin: 0 0 0.75rem 0;
-font-size: 1rem;
-}
-.pie-chart {
-width: 140px;
-height: 140px;
-margin: 0 auto 0.75rem auto;
-transform: rotate(-90deg);
-}
-.pie-center {
-font-size: 0.9rem;
-font-weight: 700;
-color: var(--dark);
-}
-.chart-bar-label {
-font-size: 0.9rem;
-margin: 0.4rem 0 0.2rem 0;
-text-align: left;
-}
-.chart-bar-track {
-width: 100%;
-background: #eee;
-border-radius: 999px;
-height: 14px;
-overflow: hidden;
-}
-.chart-bar-fill {
-height: 100%;
-background: var(--accent);
-border-radius: 999px;
-}
-.response-card {
-background: #ffffff;
-padding: 1.25rem;
-border-radius: 6px;
-margin-bottom: 1rem;
-border: 1px solid var(--border);
-}
-.response-header {
-font-weight: bold;
-color: var(--primary);
-border-bottom: 1px solid var(--border);
-padding-bottom: 0.5rem;
-margin-bottom: 0.5rem;
-}
-.response-details {
-font-size: 0.95rem;
-color: #555;
-}
-.success-screen {
-text-align: center;
-padding: 3rem 1.5rem;
-}
-.success-icon {
-font-size: 4rem;
-color: var(--accent);
-margin-bottom: 1.5rem;
-}
+:root{--y:#ffe600;--r:#ff2e2e;--k:#0a0a0a;--w:#fffdf5;--p:#ff5fd2;--g:#00e08a;--b:#2d5bff}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:'Courier New',Courier,monospace;color:var(--k);background:var(--w);
+background-image:linear-gradient(rgba(0,0,0,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(0,0,0,.08) 1px,transparent 1px);background-size:32px 32px;overflow-x:hidden;line-height:1.5}
+h1,h2,h3,h4,.btn{font-family:Impact,'Arial Black',sans-serif;text-transform:uppercase;letter-spacing:.5px}
+.tape{background:repeating-linear-gradient(-45deg,var(--y) 0 22px,var(--k) 22px 44px);height:26px;border-block:4px solid var(--k)}
+.marquee{background:var(--k);color:var(--y);overflow:hidden;white-space:nowrap;font-weight:bold;padding:.4rem 0;border-bottom:4px solid var(--r)}
+.marquee span{display:inline-block;padding-left:100%;animation:mq 22s linear infinite}
+@keyframes mq{to{transform:translateX(-100%)}}
+.hero{position:relative;padding:2rem 1rem 3rem;background:var(--r);border-bottom:8px solid var(--k);overflow:hidden}
+.hero h1{font-size:clamp(2.6rem,10vw,7.5rem);line-height:.88;margin:0;color:var(--w);text-shadow:6px 6px 0 var(--k);transform:rotate(-2.5deg);word-break:break-word}
+.hero h1 em{font-style:normal;background:var(--y);color:var(--k);padding:0 .15em;display:inline-block;transform:rotate(3deg);text-shadow:none;border:4px solid var(--k)}
+.hero .sub{display:inline-block;margin-top:1.5rem;background:var(--k);color:var(--y);padding:.6rem 1rem;font-size:1.1rem;transform:rotate(1.5deg);max-width:90%}
+.hero img{display:block;max-width:420px;width:70%;margin:1.5rem 0 0 auto;border:5px solid var(--k);box-shadow:10px 10px 0 var(--k);transform:rotate(3deg);background:var(--y)}
+.sticker{position:absolute;top:14px;right:14px;width:110px;height:110px;border-radius:50%;background:var(--y);border:4px solid var(--k);display:flex;align-items:center;justify-content:center;text-align:center;font-family:Impact,sans-serif;font-size:1.05rem;transform:rotate(14deg);animation:wob 3s ease-in-out infinite}
+@keyframes wob{50%{transform:rotate(-8deg) scale(1.08)}}
+.container{max-width:1050px;margin:0 auto;padding:2rem 1rem 4rem}
+.page{display:none}.page.active{display:block;animation:pop .3s steps(4)}
+@keyframes pop{from{transform:translate(-8px,8px);opacity:.3}}
+.section{background:var(--w);border:5px solid var(--k);box-shadow:12px 12px 0 var(--k);padding:1.6rem;margin:0 0 3rem}
+.section:nth-of-type(even){background:var(--y);transform:rotate(.6deg)}
+.section:nth-of-type(3n){background:var(--p);transform:rotate(-.7deg)}
+h2{font-size:clamp(1.8rem,5vw,3rem);margin:0 0 1rem;background:var(--k);color:var(--w);display:inline-block;padding:.1em .4em;transform:rotate(-1.5deg)}
+h3{font-size:1.5rem;margin:.2rem 0 1rem}
+p{font-size:1.05rem;margin:0 0 1rem}
+.big{font-family:Impact,sans-serif;font-size:clamp(1.6rem,5vw,2.6rem);line-height:1;margin:0 0 1.2rem}
+.big mark{background:var(--r);color:var(--w);padding:0 .2em}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:1.4rem;margin-top:1.4rem}
+.card{background:var(--w);border:4px solid var(--k);padding:1rem;box-shadow:6px 6px 0 var(--k);transition:transform .15s}
+.card:nth-child(odd){transform:rotate(-1.4deg)}.card:nth-child(even){transform:rotate(1.2deg) translateY(8px)}
+.card:hover{transform:rotate(0) scale(1.04);background:var(--g)}
+.card b{display:block;font-family:Impact,sans-serif;font-size:2.4rem;line-height:1;color:var(--r)}
+.card strong{display:block;text-transform:uppercase;margin-bottom:.4rem}
+.myth{display:grid;grid-template-columns:1fr 1fr;gap:0;margin-bottom:1rem;border:4px solid var(--k)}
+.myth div{padding:.8rem}.myth .m{background:var(--r);color:var(--w);text-decoration:line-through;text-decoration-thickness:3px}.myth .t{background:var(--g)}
+.team{display:flex;flex-wrap:wrap;gap:1rem;margin-top:1rem}
+.team div{flex:1 1 200px;background:var(--w);border:4px dashed var(--k);padding:1rem;font-weight:bold;font-size:1.2rem}
+.team div:nth-child(2){transform:rotate(2deg)}.team div:nth-child(3){transform:rotate(-2deg)}
+.team small{display:block;font-weight:normal;font-size:.85rem}
+.sos{background:var(--k);color:var(--y);border:5px solid var(--r);padding:1.2rem;text-align:center;margin:0 0 3rem;box-shadow:-10px 10px 0 var(--y)}
+.sos .num{font-family:Impact,sans-serif;font-size:clamp(2rem,8vw,4.5rem);color:var(--w);animation:bl 1s steps(2) infinite}
+@keyframes bl{50%{color:var(--r)}}
+.btn{display:block;width:100%;background:var(--y);color:var(--k);border:5px solid var(--k);padding:1rem;font-size:1.4rem;cursor:pointer;box-shadow:8px 8px 0 var(--k);margin-top:1.2rem;transition:.1s;text-align:center}
+.btn:hover{transform:translate(4px,4px);box-shadow:4px 4px 0 var(--k);background:var(--r);color:var(--w)}
+.btn:active{transform:translate(8px,8px);box-shadow:0 0 0 var(--k)}
+.btn.s{background:var(--b);color:var(--w)}.btn.g{background:var(--g)}.btn.d{background:var(--r);color:var(--w)}
+.btn.sm{display:inline-block;width:auto;font-size:1rem;padding:.6rem 1rem;margin:.3rem .4rem .3rem 0;box-shadow:4px 4px 0 var(--k)}
+.prog{position:sticky;top:0;z-index:50;background:var(--k);border-bottom:4px solid var(--y);padding:.4rem .8rem;color:var(--y);font-weight:bold}
+.prog i{display:block;height:12px;background:var(--y);width:0;margin-top:.3rem;transition:width .2s steps(5)}
+.fg{background:var(--w);border:4px solid var(--k);padding:1rem;margin-bottom:1.4rem;box-shadow:6px 6px 0 var(--k)}
+.fg:nth-child(3n){background:#fff6a8;transform:rotate(-.5deg)}.fg:nth-child(3n+1){transform:rotate(.4deg)}
+.fg label.q{display:block;font-weight:bold;font-size:1.1rem;margin-bottom:.8rem}
+.fg label.q span{background:var(--k);color:var(--y);padding:0 .35em;margin-right:.3em;font-family:Impact,sans-serif}
+.opt{display:block;padding:.6rem .8rem .6rem 2.4rem;margin-bottom:.4rem;border:3px solid var(--k);background:var(--w);cursor:pointer;position:relative}
+.opt:hover{background:var(--g)}.opt:has(input:checked){background:var(--k);color:var(--y)}
+.opt input{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);accent-color:var(--r)}
+input[type=text],select,textarea{width:100%;padding:.8rem;border:4px solid var(--k);font:inherit;background:var(--w);border-radius:0}
+input[type=text]:focus,select:focus,textarea:focus{outline:none;background:var(--y);box-shadow:6px 6px 0 var(--r)}
+textarea{min-height:100px;resize:vertical}
+input[type=range]{width:100%;accent-color:var(--r);height:30px}
+.rv{font-family:Impact,sans-serif;font-size:2.2rem;color:var(--r)}
+.stat{background:var(--w);border:4px solid var(--k);padding:1rem;margin-bottom:1rem;box-shadow:6px 6px 0 var(--k)}
+.stat h4{margin:0;font-size:1rem}.stat .value{font-family:Impact,sans-serif;font-size:3rem;line-height:1}
+.status{background:var(--k);color:var(--g);padding:.6rem;margin:1rem 0;font-size:.9rem}
+.charts{display:none;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1rem;margin:1.5rem 0}
+.chart-card{background:var(--w);border:4px solid var(--k);padding:.8rem;box-shadow:5px 5px 0 var(--k)}
+.chart-card h4{margin:0 0 .6rem;font-size:.95rem}
+.bl{font-size:.85rem;margin:.4rem 0 .15rem}
+.bt{background:#ddd;border:2px solid var(--k);height:16px}.bf{height:100%;background:var(--r)}
+.rl{margin-top:1rem;max-height:520px;overflow-y:auto;border:4px solid var(--k);padding:.8rem;background:#eee}
+.rc{background:var(--w);border:3px solid var(--k);padding:.8rem;margin-bottom:.8rem;cursor:pointer}
+.rc:hover{background:var(--y)}.rh{font-weight:bold;color:var(--r);border-bottom:2px solid var(--k);margin-bottom:.4rem}
+.ok{text-align:center;padding:2rem 0}.ok .ic{font-size:6rem;color:var(--g);text-shadow:5px 5px 0 var(--k);line-height:1}
+#detailModal{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);align-items:center;justify-content:center;z-index:9999}
+#detailModal>div{background:var(--w);border:5px solid var(--k);box-shadow:10px 10px 0 var(--r);max-width:700px;width:92%;padding:1.2rem;position:relative}
+.x{position:absolute;right:.5rem;top:.5rem;background:var(--r);color:var(--w);border:3px solid var(--k);font-size:1.2rem;cursor:pointer;width:38px;height:38px}
+footer{background:var(--k);color:var(--y);text-align:center;padding:1.5rem;font-weight:bold}
+@media(max-width:600px){.myth{grid-template-columns:1fr}.hero img{width:90%}.sticker{width:84px;height:84px;font-size:.8rem}}
+@media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 <script type="module">
-  import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
-  window.supabaseCreateClient = function(url, key) {
-    return createClient(url, key);
-  };
-  window.supabaseModuleLoaded = true;
+import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/+esm';
+window.supabaseCreateClient=function(u,k){return createClient(u,k)};
+window.supabaseModuleLoaded=true;
 </script>
 </head>
 <body>
+<div class="tape"></div>
+<div class="marquee"><span>⚠ VIAȚA ARE PRIORITATE ⚠ O SINGURĂ DOZĂ POATE SCHIMBA TOT ⚠ SPUNE NU AZI, MÂINE POATE F PREA TÂRZIU ⚠ LINIA VERDE ANTIDROG 08008 700 700 ⚠ NU EȘTI SINGUR ⚠ VORBEȘTE CU CINEVA ⚠</span></div>
 
-<div class="banner-placeholder">
-<h1>Viața are Prioritate - Spune NU Drogurilor!</h1>
-  <img src="image.png">
+<div class="hero">
+<h1>Viața are <em>Prioritate</em><br>Spune NU!</h1>
+<div class="sub">La început le controlezi tu, apoi te controlează ele.</div>
+<img src="image.png" alt="Banner" onerror="this.style.display='none'">
 </div>
+<div class="tape"></div>
+
 <div class="container">
 
 <div id="homePage" class="page active">
 <div class="section">
-    <h1>La început le controlezi tu, apoi te controlează ele.</h1>  <br> <hr> <br>
-<h2>Despre fenomenul consumului de substanțe</h2>
-<p>Consumul de substanțe psihoactive reprezintă una dintre cele mai mari provocări cu care se confruntă societatea modernă și, în special, tânăra generație. Dependența nu alege, iar de cele mai multe ori debutează sub forma unei simple curiozități.</p>
-
-<div class="grid-info">
-<div class="info-card">
-<strong>Mitul controlului absolut</strong>
-Orice consumator debutează cu certitudinea că se poate opri oricând dorește. În realitate, mecanismele neurochimice se instalează extrem de rapid.
-</div>
-<div class="info-card">
-<strong>Consecințe pe termen lung</strong>
-Pe lângă degradarea severă a stării de sănătate fizică și mentală, implicarea atrage consecințe juridice permanente.
-</div>
+<h2>Ce se întâmplă de fapt</h2>
+<p class="big">„Mă opresc <mark>oricând</mark> vreau.” — fraza pe care o spune <mark>fiecare</mark> început de dependență.</p>
+<p>Consumul de substanțe psihoactive este una dintre cele mai mari provocări ale tinerei generații. Dependența nu alege pe nimeni, iar de cele mai multe ori debutează sub forma unei simple curiozități, a unei provocări sau a unei seri „doar o dată”.</p>
+<div class="cards">
+<div class="card"><b>01</b><strong>Mitul controlului</strong>Orice consumator debutează sigur că se poate opri. Mecanismele neurochimice se instalează însă extrem de rapid.</div>
+<div class="card"><b>02</b><strong>Corpul plătește</strong>Inimă, ficat, plămâni, somn, memorie. Drogurile nu fac excepții și nu negociază.</div>
+<div class="card"><b>03</b><strong>Mintea plătește</strong>Anxietate, depresie, paranoia, pierderea motivației. Școala și visele rămân pe locul doi.</div>
+<div class="card"><b>04</b><strong>Legea nu glumește</strong>Deținerea pentru consum propriu este pedepsită. Un dosar penal te urmărește ani întregi.</div>
 </div>
 </div>
 
 <div class="section">
-<h2>Echipa de proiect / Colaboratori</h2>
-<div class="collaborators-grid">
-<div class="collaborator-item">
-Amalia B.
-<span class="collaborator-title">Coordonator Proiect & Dezvoltator formular & grafică banner</span>
+<h2>Mit vs. Adevăr</h2>
+<div class="myth"><div class="m">„E doar iarbă, nu e drog adevărat.”</div><div class="t">Canabisul poate crea dependență psihică și afectează memoria și atenția.</div></div>
+<div class="myth"><div class="m">„Etnobotanicele sunt legale și sigure.”</div><div class="t">Sunt adesea mai periculoase: compoziția e necunoscută, iar efectele imprevizibile.</div></div>
+<div class="myth"><div class="m">„O singură dată nu strică.”</div><div class="t">Nu poți ști cum reacționează corpul tău. Prima doză poate fi și ultima.</div></div>
+<div class="myth"><div class="m">„Mă las singur când vreau.”</div><div class="t">Recuperarea are nevoie de medici, psihologi și sprijin. Nu e o chestiune de voință.</div></div>
+<div class="myth"><div class="m">„Toți o fac, deci e normal.”</div><div class="t">Majoritatea tinerilor NU consumă. Presiunea grupului exagerează realitatea.</div></div>
 </div>
-<div class="collaborator-item">
-Simion C.
-<span class="collaborator-title">Dezvoltare Conținut & Analiză</span>
-</div>
-<div class="collaborator-item">
-Cristian R.
-<span class="collaborator-title">Design Grafic & Materiale Vizuale</span>
-</div>
-<div class="collaborator-item">
-David V.
-<span class="collaborator-title">Design Grafic & Materiale Vizuale</span>
-</div>
+
+<div class="section">
+<h2>Cum refuzi, pas cu pas</h2>
+<div class="cards">
+<div class="card"><b>1</b><strong>Spune scurt NU</strong>Fără explicații lungi. „Nu, mersi” e o propoziție completă.</div>
+<div class="card"><b>2</b><strong>Schimbă subiectul</strong>Propune altceva: o glumă, o plimbare, un joc.</div>
+<div class="card"><b>3</b><strong>Pleacă</strong>Dacă insistă, pleacă. Un prieten adevărat nu te presează.</div>
+<div class="card"><b>4</b><strong>Cere ajutor</strong>Un părinte, un profesor, un consilier. Nu ești singur.</div>
 </div>
 </div>
 
-<button class="btn" type="button" onclick="startForm()">Începe Chestionarul</button>
-<button class="btn btn-secondary btn-accent" type="button" onclick="navigateTo('statsPage')">Vezi Statisticile</button>
+<div class="sos">
+<h3>Ai nevoie să vorbești? Apelul este gratuit.</h3>
+<div class="num">08008 700 700</div>
+<div>Linia Verde Antidrog · în caz de urgență: <b>112</b></div>
+</div>
+
+<div class="section">
+<h2>Echipa de proiect</h2>
+<div class="team">
+<div>Amalia B.<small>Coordonator Proiect & Dezvoltator site & grafică banner</small></div>
+<div>Simion C.<small>Dezvoltare Conținut & Analiză</small></div>
+<div>Cristian R.<small>Design Grafic & Materiale Vizuale</small></div>
+<div>David V.<small>Design Grafic & Materiale Vizuale</small></div>
+</div>
+</div>
+
+<button class="btn" type="button" onclick="startForm()">▶ Începe chestionarul (35 întrebări)</button>
+<button class="btn s" type="button" onclick="navigateTo('statsPage')">▶ Vezi statisticile live</button>
 </div>
 
 <div id="formPage" class="page">
-<div class="section">
-<h2>Chestionar de Evaluare (25 Întrebări)</h2>
-    <h3>Spune NU astăzi, pentru a putea spune DA viitorului mâine.</h3> <br> <hr> <br>
-<form id="antiDrogForm">
-<div class="form-group">
-<label>1. Introdu numele tău complet (sau introduceți "Anonim"):</label>
-<input type="text" id="nume" placeholder="Nume și prenume..." required>
-</div>
-
-<div class="form-group">
-<label>2. Care este categoria ta de vârstă?</label>
-<select id="varsta" required>
-<option value="" disabled selected>Selectează vârsta...</option>
-<option value="Sub 14 ani">Sub 14 ani</option>
-<option value="14-16 ani">14 - 16 ani</option>
-<option value="16-18 ani">16 - 18 ani</option>
-<option value="Peste 18 ani">Peste 18 ani</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>3. Consideri că consumul de droguri reprezintă o problemă majoră în rândul tinerilor?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q3" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q3" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>4. Ți s-a oferit vreodată în mod direct/indirect o substanță interzisă?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q4" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q4" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>5. Cunoști persoanele din școală cărora le poți cere sprijinul în caz de nevoie?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q5" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q5" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>6. Crezi că presiunea grupului reprezintă principalul motiv pentru a experimenta?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q6" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q6" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>7. Crezi că tutunul sau alcoolul facilitează trecerea către substanțe mai periculoase?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q7" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q7" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>8. Știai că drogurile sintetice (etnobotanicele) sunt uneori mult mai periculoase?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q8" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q8" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>9. Ai participat la campanii de informare dedicate prevenirii consumului?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q9" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q9" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>10. Consideri că fumatul ocazional (ex: canabis) poate provoca dependență psihică?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q10" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q10" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>11. Ai discuta cu părinții tăi dacă te-ai confrunta cu o problemă legată de consum?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q11" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q11" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>12. Ești la curent că legislația pedepsește și deținerea pentru consum propriu?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q12" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q12" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>13. Crezi că o singură doză este inofensivă?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q13" value="Da"> Da</label>
-<label class="radio-label"><input type="radio" name="q13" value="Nu" required> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>14. Simți că primești suficiente informații realiste din mass-media?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q14" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q14" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>15. Cum ai acționa dacă ai fi presat să încerci o pastilă necunoscută la o petrecere?</label>
-<select id="q15" required>
-<option value="" disabled selected>Alege...</option>
-<option value="Refuz ferm">Refuz ferm</option>
-<option value="Accept">Accept din curiozitate</option>
-<option value="Părăsesc locația">Părăsesc locația imediat</option>
-</select>
-</div>
-
-<div class="form-group">
-<label>16. Crezi că drogurile afectează direct performanța școlară?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q16" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q16" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>17. Crezi că problemele din familie pot împinge un tânăr spre consum?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q17" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q17" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>18. Știai că există o linie telefonică gratuită (TelVerde anti-drog)?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q18" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q18" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>19. Consideri că un dependent se poate recupera total singur, fără medici?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q19" value="Da"> Da</label>
-<label class="radio-label"><input type="radio" name="q19" value="Nu" required> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>20. Îți iei angajamentul de a refuza influențele negative?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q20" value="Da" required> Da, îmi asum</label>
-<label class="radio-label"><input type="radio" name="q20" value="Nu"> Sunt indecis/ă</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>21. Care surse crezi că sunt cele mai sigure pentru informare?</label>
-<div class="checkbox-stack">
-<label class="checkbox-label"><input type="checkbox" name="q21" value="Medici"> Medici/Psihologi</label>
-<label class="checkbox-label"><input type="checkbox" name="q21" value="Prieteni"> Prieteni</label>
-<label class="checkbox-label"><input type="checkbox" name="q21" value="Scoală"> Școală</label>
-<label class="checkbox-label"><input type="checkbox" name="q21" value="Internet"> Internet</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>22. Ce consecințe te îngrijorează cel mai mult?</label>
-<div class="checkbox-stack">
-<label class="checkbox-label"><input type="checkbox" name="q22" value="Sănătate"> Sănătatea</label>
-<label class="checkbox-label"><input type="checkbox" name="q22" value="Închisoare"> Închisoarea</label>
-<label class="checkbox-label"><input type="checkbox" name="q22" value="Familie"> Dezamăgirea familiei</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>23. Cât de ușor crezi că au acces tinerii la substanțe?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q23" value="Foarte usor" required> Foarte ușor</label>
-<label class="radio-label"><input type="radio" name="q23" value="Greu"> Relativ greu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>24. Crezi că pedepsele pentru trafic ar trebui să fie mai aspre?</label>
-<div class="radio-stack">
-<label class="radio-label"><input type="radio" name="q24" value="Da" required> Da</label>
-<label class="radio-label"><input type="radio" name="q24" value="Nu"> Nu</label>
-</div>
-</div>
-
-<div class="form-group">
-<label>25. Sti pe cineva care a consumat vreodată droguri?</label>
-<textarea id="q25" placeholder="Părerea ta contează..."></textarea>
-</div>
-
-<button type="submit" class="btn">Finalizează și Trimite</button>
-</form>
-<button class="btn btn-secondary" type="button" onclick="navigateTo('homePage')">Revino la pagina principala</button>
+<div class="prog"><span id="progTxt">0 / 35</span><i id="progBar"></i></div>
+<div class="section" style="margin-top:1.5rem">
+<h2>Chestionar (35 întrebări)</h2>
+<h3>Spune NU astăzi, pentru a putea spune DA viitorului mâine.</h3>
+<form id="antiDrogForm"><div id="formFields"></div>
+<button type="submit" class="btn g">✔ Finalizează și trimite</button></form>
+<button class="btn s" type="button" onclick="navigateTo('homePage')">← Revino la pagina principală</button>
 </div>
 </div>
 
 <div id="successPage" class="page">
-<div class="section success-screen">
-<div class="success-icon">✓</div>
+<div class="section ok">
+<div class="ic">✓</div>
 <h2>Formularul a fost trimis!</h2>
-<div style="display:flex; gap:0.75rem; justify-content:center; margin-top:1rem;">
-    <button class="btn" type="button" onclick="navigateTo('homePage')">Revino la pagina principala</button>
-</div>
+<p class="big">Mulțumim. Fiecare răspuns contează.</p>
+<button class="btn" type="button" onclick="navigateTo('homePage')">Revino la pagina principală</button>
 </div>
 </div>
 
 <div id="statsPage" class="page">
 <div class="section">
-<h2>Panou de Centralizare Live</h2>
-<div class="stats-container">
-<div class="stat-card">
-<h4>Total chestionare completate</h4>
-<div id="totalCount" class="value">0</div>
+<h2>Panou de centralizare live</h2>
+<div class="stat"><h4>Total chestionare completate</h4><div id="totalCount" class="value">0</div></div>
+<div class="stat"><h4>Au fost oferte (Q4)</h4><div id="q4Stats" class="value">0%</div></div>
+<div id="statsStatus" class="status">Se încarcă datele...</div>
+<div>
+<button class="btn sm g" type="button" onclick="updateStats()">Reîncarcă</button>
+<button class="btn sm s" type="button" onclick="toggleQuestionCharts()">Diagrame</button>
+<button class="btn sm d" type="button" onclick="clearDataWithCode()">Șterge (cod)</button>
 </div>
-
-<div class="stat-card">
-<h4>Au fost oferte (Q4)</h4>
-<div id="q4Stats" class="value">0%</div>
+<div id="chartsContainer" class="charts"></div>
+<div id="responsesList" class="rl"></div>
 </div>
-<div id="statsStatus" class="stats-status">Se încarcă datele...</div>
-<div style="display:flex; flex-wrap:wrap; gap:0.75rem; align-items:center; margin-top:1rem;">
-  <button class="btn btn-accent" type="button" onclick="updateStats()" style="width:auto; padding:0.9rem 1.2rem;">Reîncarcă datele</button>
-  <button class="btn btn-secondary" type="button" onclick="toggleQuestionCharts()" style="width:auto; padding:0.9rem 1.2rem;">Diagrame statistici</button>
-  <button class="btn btn-secondary" type="button" onclick="clearDataWithCode()" style="width:auto; padding:0.9rem 1.2rem; background-color:#e74c3c;">Șterge toate răspunsurile (cod)</button>
-</div>
-<div id="chartsContainer" class="charts-container" style="display:none;"></div>
-<div id="responsesList" class="responses-list" style="margin-top:1rem;"></div>
-<!-- Modal pentru detalii răspuns -->
-<div id="detailModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); align-items:center; justify-content:center; z-index:9999;">
-  <div style="background:white; max-width:700px; width:90%; margin:auto; padding:1.5rem; border-radius:8px; position:relative;">
-    <button onclick="closeDetailModal()" style="position:absolute; right:0.75rem; top:0.5rem; background:#eee; border:none; padding:0.4rem 0.6rem; border-radius:4px; cursor:pointer;">×</button>
-    <div id="detailContent"></div>
-    <div style="margin-top:1rem; text-align:right;">
-      <button id="detailDeleteBtn" class="btn btn-secondary" style="width:auto; padding:0.5rem 0.75rem; margin-right:0.5rem;">Șterge</button>
-      <button onclick="closeDetailModal()" class="btn" style="width:auto; padding:0.5rem 0.75rem;">Închide</button>
-    </div>
-  </div>
-</div>
-</div>
-<button class="btn btn-secondary" type="button" onclick="navigateTo('homePage')" style="margin-top: 1.5rem;">Revino la pagina principala</button>
-</div>
+<button class="btn s" type="button" onclick="navigateTo('homePage')">← Revino la pagina principală</button>
 </div>
 
 </div>
+
+<div id="detailModal"><div><button class="x" onclick="closeDetailModal()">×</button><div id="detailContent"></div>
+<div style="margin-top:1rem;text-align:right"><button id="detailDeleteBtn" class="btn sm d">Șterge</button><button onclick="closeDetailModal()" class="btn sm">Închide</button></div></div></div>
+
+<div class="tape"></div>
+<footer>VIAȚA ARE PRIORITATE · Proiect școlar de prevenție · Nu ești singur.</footer>
 
 <script>
-// Cod Vanilla JS (ES5) - Compatibilitate 100% garantată pe orice versiune de browser sau sistem
 var DEV_CODE = "1234admin";
 var SUPABASE_URL = "https://qtibuasmvzukiicbtbum.supabase.co";
 var SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InF0aWJ1YXNtdnp1a2lpY2J0YnVtIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODEwMDEyNDAsImV4cCI6MjA5NjU3NzI0MH0.XyDwvXAppVIvQNUouhSnc_Rqt9bBIrUmFGsHsWnKYqo";
+var supabaseClient = null, realtimeChannel = null, startTime = 0;
+var lastLoadedData = [], lastLoadedSource = 'local', chartsVisible = false, lastSubmitted = null;
 
-var supabaseClient = null;
-var realtimeChannel = null;
+/* ===== Întrebări: [cheie, text, tip, opțiuni] tip: text | sel | yn | r | c | txt | rng ===== */
+var YN = ['Da','Nu'];
+var Q = [
+['nume','Introdu numele tău complet (sau scrie „Anonim”):','text'],
+['varsta','Care este categoria ta de vârstă?','sel',['Sub 14 ani','14-16 ani','16-18 ani','Peste 18 ani']],
+['q3','Consideri că consumul de droguri este o problemă majoră în rândul tinerilor?','yn'],
+['q4','Ți s-a oferit vreodată, direct sau indirect, o substanță interzisă?','yn'],
+['q5','Cunoști persoane din școală cărora le poți cere sprijinul în caz de nevoie?','yn'],
+['q6','Crezi că presiunea grupului este principalul motiv pentru a experimenta?','yn'],
+['q7','Crezi că tutunul sau alcoolul facilitează trecerea către substanțe mai periculoase?','yn'],
+['q8','Știai că drogurile sintetice (etnobotanicele) sunt uneori mult mai periculoase?','yn'],
+['q9','Ai participat la campanii de informare dedicate prevenirii consumului?','yn'],
+['q10','Consideri că fumatul ocazional (ex: canabis) poate provoca dependență psihică?','yn'],
+['q11','Ai discuta cu părinții tăi dacă te-ai confrunta cu o problemă legată de consum?','yn'],
+['q12','Ești la curent că legislația pedepsește și deținerea pentru consum propriu?','yn'],
+['q13','Crezi că o singură doză este inofensivă?','yn'],
+['q14','Simți că primești suficiente informații realiste din mass-media?','yn'],
+['q15','Cum ai acționa dacă ai fi presat să încerci o pastilă necunoscută la o petrecere?','sel',['Refuz ferm','Accept','Părăsesc locația']],
+['q16','Crezi că drogurile afectează direct performanța școlară?','yn'],
+['q17','Crezi că problemele din familie pot împinge un tânăr spre consum?','yn'],
+['q18','Știai că există o linie telefonică gratuită (Linia Verde Antidrog)?','yn'],
+['q19','Consideri că un dependent se poate recupera total singur, fără medici?','yn'],
+['q20','Îți iei angajamentul de a refuza influențele negative?','r',[['Da','Da, îmi asum'],['Nu','Sunt indecis/ă']]],
+['q21','Care surse crezi că sunt cele mai sigure pentru informare?','c',['Medici','Prieteni','Scoală','Internet']],
+['q22','Ce consecințe te îngrijorează cel mai mult?','c',['Sănătate','Închisoare','Familie']],
+['q23','Cât de ușor crezi că au acces tinerii la substanțe?','r',[['Foarte usor','Foarte ușor'],['Greu','Relativ greu']]],
+['q24','Crezi că pedepsele pentru trafic ar trebui să fie mai aspre?','yn'],
+['q25','Știi pe cineva care a consumat vreodată droguri?','txt','Părerea ta contează...'],
+['q26','Cât de des vezi pe rețelele sociale conținut care face consumul să pară „cool”?','sel',['Zilnic','Săptămânal','Rar','Niciodată']],
+['q27','Unde crezi că are loc cel mai des primul contact cu substanțele?','c',['Petreceri','Școală','Online','Cartier','Grup de prieteni']],
+['q28','Crezi că țigările electronice (vape) pot fi o poartă de intrare către alte substanțe?','yn'],
+['q29','Cât de bine informat/ă te simți despre efectele drogurilor? (1 = deloc, 10 = foarte bine)','rng'],
+['q30','Ai ști să reacționezi (să suni la 112) dacă un coleg ar avea o reacție gravă după consum?','yn'],
+['q31','Ce ar ajuta cel mai mult la prevenție în școala ta?','c',['Consiliere psihologică','Activități extrașcolare','Povești reale','Controale','Sport și evenimente']],
+['q32','Ai încredere să discuți deschis cu un profesor sau consilier despre acest subiect?','yn'],
+['q33','Ai spune unui prieten să se oprească dacă ai observa că riscă?','yn'],
+['q34','Ce i-ai spune unui prieten care este tentat să încerce?','txt','Scrie-i un mesaj scurt...'],
+['q35','Ce ai schimba tu ca să fie mai puține cazuri în rândul tinerilor?','txt','Ideile tale...']
+];
 
-function initSupabase() {
-    if (supabaseClient) return;
-    try {
-        if (window.supabaseCreateClient) {
-            supabaseClient = window.supabaseCreateClient(SUPABASE_URL, SUPABASE_KEY);
-            console.log('Supabase client inițializat cu createClient importat.');
-            return;
-        }
+function esc(v){ if(v===undefined||v===null) return ''; return String(v).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+var ascunde = esc;
+function opt(o){ return (typeof o==='string')?[o,o]:o; }
 
-        console.log('Supabase globals:', typeof supabase, typeof Supabase, typeof window.supabase, typeof window.Supabase, typeof window.supabaseCreateClient);
-        var supabaseLib = null;
-        if (typeof supabase !== 'undefined') {
-            supabaseLib = supabase;
-        } else if (typeof Supabase !== 'undefined') {
-            supabaseLib = Supabase;
-        } else if (window.supabase) {
-            supabaseLib = window.supabase;
-        } else if (window.Supabase) {
-            supabaseLib = window.Supabase;
-        }
-
-        if (supabaseLib && SUPABASE_URL.indexOf("PROIECTUL") === -1 && typeof supabaseLib.createClient === 'function') {
-            supabaseClient = supabaseLib.createClient(SUPABASE_URL, SUPABASE_KEY);
-            console.log('Supabase client inițializat cu succes.');
-        } else if (!supabaseLib) {
-            console.log('Supabase nu a fost găsit în pagina curentă.');
-        }
-    } catch (err) {
-        console.log('Supabase init error:', err);
-        supabaseClient = null;
-    }
+function buildForm(){
+  var h='';
+  for(var i=0;i<Q.length;i++){
+    var q=Q[i], k=q[0], n=i+1;
+    h+='<div class="fg"><label class="q"><span>'+n+'</span>'+esc(q[1])+'</label>';
+    if(q[2]==='text') h+='<input type="text" id="'+k+'" placeholder="Nume și prenume..." required>';
+    else if(q[2]==='sel'){ h+='<select id="'+k+'" required><option value="" disabled selected>Alege...</option>'; for(var a=0;a<q[3].length;a++) h+='<option value="'+esc(q[3][a])+'">'+esc(q[3][a])+'</option>'; h+='</select>'; }
+    else if(q[2]==='txt') h+='<textarea id="'+k+'" placeholder="'+esc(q[3])+'"></textarea>';
+    else if(q[2]==='rng') h+='<input type="range" id="'+k+'" min="1" max="10" value="5"><div class="rv" id="'+k+'v">5</div>';
+    else if(q[2]==='c'){ for(var c=0;c<q[3].length;c++) h+='<label class="opt"><input type="checkbox" name="'+k+'" value="'+esc(q[3][c])+'"> '+esc(q[3][c])+'</label>'; }
+    else { var os=(q[2]==='yn')?YN:q[3]; for(var r=0;r<os.length;r++){ var p=opt(os[r]); h+='<label class="opt"><input type="radio" name="'+k+'" value="'+esc(p[0])+'" required> '+esc(p[1])+'</label>'; } }
+    h+='</div>';
+  }
+  document.getElementById('formFields').innerHTML=h;
+  var rg=document.querySelectorAll('input[type=range]');
+  for(var z=0;z<rg.length;z++){ rg[z].oninput=function(){ document.getElementById(this.id+'v').innerText=this.value; progress(); }; }
+  document.getElementById('antiDrogForm').addEventListener('input',progress);
+  document.getElementById('antiDrogForm').addEventListener('change',progress);
+}
+function isDone(q){
+  var k=q[0];
+  if(q[2]==='text'||q[2]==='sel'||q[2]==='txt') return document.getElementById(k).value.trim()!=='';
+  if(q[2]==='rng') return true;
+  if(q[2]==='c') return getCheckboxValues(k)!=='';
+  return getRadioValue(k)!=='';
+}
+function progress(){
+  var d=0; for(var i=0;i<Q.length;i++){ if(isDone(Q[i])) d++; }
+  document.getElementById('progTxt').innerText=d+' / '+Q.length;
+  document.getElementById('progBar').style.width=Math.round(d/Q.length*100)+'%';
 }
 
-try {
-    initSupabase();
-} catch (err) {
-    console.log("Supabase ignorat - Mod Local Activat.");
+/* ===== Supabase ===== */
+function initSupabase(){
+  if(supabaseClient) return;
+  try{
+    if(window.supabaseCreateClient){ supabaseClient=window.supabaseCreateClient(SUPABASE_URL,SUPABASE_KEY); return; }
+    var lib=null;
+    if(window.supabase) lib=window.supabase; else if(window.Supabase) lib=window.Supabase;
+    if(lib && typeof lib.createClient==='function') supabaseClient=lib.createClient(SUPABASE_URL,SUPABASE_KEY);
+  }catch(err){ console.log('Supabase init error:',err); supabaseClient=null; }
+}
+try{ initSupabase(); }catch(e){ console.log('Supabase ignorat - Mod Local Activat.'); }
+
+function setupRealtime(){
+  if(!supabaseClient||realtimeChannel) return;
+  realtimeChannel=supabaseClient.channel('public-raspunsuri')
+    .on('postgres_changes',{event:'*',schema:'public',table:'raspunsuri'},function(){
+      if(document.getElementById('statsPage').classList.contains('active')) updateStats();
+    }).subscribe();
 }
 
-var startTime = 0;
-
-function navigateTo(pageId) {
-    var pages = document.querySelectorAll('.page');
-    for (var i = 0; i < pages.length; i++) {
-        pages[i].classList.remove('active');
-    }
-    document.getElementById(pageId).classList.add('active');
-    window.scrollTo(0, 0);
-    if (pageId === 'statsPage') {
-        updateStats();
-    }
+function navigateTo(id){
+  var pg=document.querySelectorAll('.page');
+  for(var i=0;i<pg.length;i++) pg[i].classList.remove('active');
+  document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+  if(id==='statsPage') updateStats();
 }
+function startForm(){ startTime=new Date().getTime(); navigateTo('formPage'); progress(); }
+function getRadioValue(n){ var el=document.querySelector('input[name="'+n+'"]:checked'); return el?el.value:''; }
+function getCheckboxValues(n){ var v=[],els=document.querySelectorAll('input[name="'+n+'"]:checked'); for(var i=0;i<els.length;i++) v.push(els[i].value); return v.join(', '); }
 
-function setupRealtime() {
-    if (!supabaseClient || realtimeChannel) return;
-    realtimeChannel = supabaseClient.channel('public-raspunsuri')
-        .on('postgres_changes', { event: '*', schema: 'public', table: 'raspunsuri' }, function(payload) {
-            console.log('Realtime update:', payload);
-            if (document.getElementById('statsPage').classList.contains('active')) {
-                updateStats();
-            }
-        })
-        .subscribe();
-}
+document.addEventListener('DOMContentLoaded',function(){ buildForm(); initSupabase(); if(supabaseClient) setupRealtime(); });
 
-function startForm() {
-    startTime = new Date().getTime();
-    navigateTo('formPage');
-}
-
-function getRadioValue(name) {
-    var el = document.querySelector('input[name="' + name + '"]:checked');
-    return el ? el.value : '';
-}
-
-function ascunde(value) {
-    if (value === undefined || value === null) return '';
-    return String(value);
-}
-
-function getCheckboxValues(name) {
-    var vals = [];
-    var els = document.querySelectorAll('input[name="' + name + '"]:checked');
-    for (var i = 0; i < els.length; i++) {
-        vals.push(els[i].value);
-    }
-    return vals.join(', ');
-}
-
-document.addEventListener('DOMContentLoaded', function() {
-    initSupabase();
-    if (supabaseClient) {
-        setupRealtime();
-    }
+document.getElementById('antiDrogForm').addEventListener('submit',function(e){
+  e.preventDefault();
+  var azi=new Date(), duration=Math.round((azi.getTime()-startTime)/1000);
+  var ora=azi.getHours()+':'+(azi.getMinutes()<10?'0':'')+azi.getMinutes();
+  var record={};
+  for(var i=0;i<Q.length;i++){
+    var q=Q[i],k=q[0];
+    if(q[2]==='text'||q[2]==='sel'||q[2]==='txt'||q[2]==='rng') record[k]=document.getElementById(k).value;
+    else if(q[2]==='c') record[k]=getCheckboxValues(k);
+    else record[k]=getRadioValue(k);
+  }
+  record.ora=ora+' ('+duration+' secunde)';
+  if(supabaseClient){
+    supabaseClient.from('raspunsuri').insert([record]).select().then(function(res){
+      if(res.error) throw res.error;
+      var ins=res.data&&res.data[0]?res.data[0]:null;
+      if(ins&&ins.id!==undefined) lastSubmitted={id:String(ins.id),source:'cloud'};
+      finalizareTrimitere();
+    }).catch(function(err){
+      console.log('Insert error:',err);
+      salvareLocala(record); lastSubmitted={id:record._id,source:'local'}; finalizareTrimitere();
+    });
+  }else{
+    salvareLocala(record); lastSubmitted={id:record._id,source:'local'}; finalizareTrimitere();
+  }
 });
 
-document.getElementById('antiDrogForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    var endTime = new Date().getTime();
-    var duration = Math.round((endTime - startTime) / 1000);
-    var azi = new Date();
-    var oraCurenta = azi.getHours() + ":" + (azi.getMinutes()<10?'0':'') + azi.getMinutes();
-    
-    var record = {
-        nume: document.getElementById('nume').value,
-        varsta: document.getElementById('varsta').value,
-        q3: getRadioValue('q3'),
-        q4: getRadioValue('q4'),
-        q5: getRadioValue('q5'),
-        q6: getRadioValue('q6'),
-        q7: getRadioValue('q7'),
-        q8: getRadioValue('q8'),
-        q9: getRadioValue('q9'),
-        q10: getRadioValue('q10'),
-        q11: getRadioValue('q11'),
-        q12: getRadioValue('q12'),
-        q13: getRadioValue('q13'),
-        q14: getRadioValue('q14'),
-        q15: document.getElementById('q15').value,
-        q16: getRadioValue('q16'),
-        q17: getRadioValue('q17'),
-        q18: getRadioValue('q18'),
-        q19: getRadioValue('q19'),
-        q20: getRadioValue('q20'),
-        q21: getCheckboxValues('q21'),
-        q22: getCheckboxValues('q22'),
-        q23: getRadioValue('q23'),
-        q24: getRadioValue('q24'),
-        q25: document.getElementById('q25').value,
-        ora: oraCurenta + " (" + duration + " secunde)"
-    };
+function finalizareTrimitere(){ document.getElementById('antiDrogForm').reset(); progress(); navigateTo('successPage'); }
 
-    if (supabaseClient) {
-        supabaseClient.from('raspunsuri').insert([record]).then(function(res) {
-            if (res.error) throw res.error;
-            try {
-                var inserted = res.data && res.data[0] ? res.data[0] : null;
-                if (inserted && inserted.id !== undefined) {
-                    lastSubmitted = { id: String(inserted.id), source: 'cloud' };
-                }
-            } catch (e) { console.warn('Could not parse insert response', e); }
-            finalizareTrimitere();
-        }).catch(function(err) {
-            salvareLocala(record);
-            lastSubmitted = { id: record._id, source: 'local' };
-            finalizareTrimitere();
-        });
-    } else {
-        salvareLocala(record);
-        lastSubmitted = { id: record._id, source: 'local' };
-        finalizareTrimitere();
-    }
-});
-
-function finalizareTrimitere() {
-    document.getElementById('antiDrogForm').reset();
-    navigateTo('successPage');
+function salvareLocala(record){
+  var db=JSON.parse(localStorage.getItem('antiDrogData2'))||[];
+  if(!record._id) record._id='local_'+(new Date().getTime())+'_'+Math.random().toString(36).slice(2,9);
+  db.push(record);
+  localStorage.setItem('antiDrogData2',JSON.stringify(db));
 }
 
-var lastLoadedData = [];
-var lastLoadedSource = 'local';
-var chartsVisible = false;
-var lastSubmitted = null;
-
-function salvareLocala(record) {
-    var db = JSON.parse(localStorage.getItem('antiDrogData2')) || [];
-    if (!record._id) record._id = 'local_' + (new Date().getTime()) + '_' + Math.random().toString(36).slice(2,9);
-    db.push(record);
-    localStorage.setItem('antiDrogData2', JSON.stringify(db));
+function updateStats(){
+  var local=JSON.parse(localStorage.getItem('antiDrogData2'))||[];
+  for(var i=0;i<local.length;i++){ if(!local[i]._id) local[i]._id='local_'+(new Date().getTime())+'_'+Math.random().toString(36).slice(2,9); }
+  localStorage.setItem('antiDrogData2',JSON.stringify(local));
+  initSupabase();
+  setStatsStatus('Încărcare date din baza publică...');
+  if(supabaseClient){
+    supabaseClient.from('raspunsuri').select('*').then(function(res){
+      if(res.error){
+        setStatsStatus('Eroare Supabase: '+(res.error.message||'necunoscută')+'; afișez local.');
+        supabaseClient=null; afiseazaDate(local,'local'); return;
+      }
+      var cloud=res.data||[];
+      if(cloud.length===0){ setStatsStatus('Nu s-au găsit răspunsuri în cloud; afișez date locale.'); afiseazaDate(local,'local'); return; }
+      setStatsStatus('Datele din cloud au fost încărcate.');
+      var merged=cloud.slice();
+      for(var j=0;j<local.length;j++) merged.push(local[j]);
+      afiseazaDate(merged,'cloud');
+    }).catch(function(err){
+      setStatsStatus('Eroare la conectare Supabase; afișez local. '+(err.message||err));
+      supabaseClient=null; afiseazaDate(local,'local');
+    });
+  }else{
+    setStatsStatus('Supabase indisponibil; afișez date locale.');
+    afiseazaDate(local,'local');
+  }
 }
 
-function updateStats() {
-    var local = JSON.parse(localStorage.getItem('antiDrogData2')) || [];
-    for (var i = 0; i < local.length; i++) { if (!local[i]._id) local[i]._id = 'local_' + (new Date().getTime()) + '_' + Math.random().toString(36).slice(2,9); }
-    localStorage.setItem('antiDrogData2', JSON.stringify(local));
+function getElement(id){ return document.getElementById(id); }
+function setStatsStatus(m){ var el=getElement('statsStatus'); if(el) el.innerText=m; }
+function setInnerHTML(id,h){ var el=getElement(id); if(el) el.innerHTML=h; }
+function setInnerText(id,t){ var el=getElement(id); if(el) el.innerText=t; }
 
-    initSupabase();
-    setStatsStatus('Încarcare date din baza publică...');
-    if (supabaseClient) {
-        supabaseClient.from('raspunsuri').select('*').then(function(res) {
-            if (res.error) {
-                console.log('Supabase error:', res.error);
-                if (res.error.message) {
-                    setStatsStatus('Eroare Supabase: ' + res.error.message);
-                } else {
-                    setStatsStatus('Eroare Supabase necunoscută; afișez local.');
-                }
-                supabaseClient = null;
-                afiseazaDate(local, 'local');
-                return;
-            }
-            var cloudData = res.data || [];
-            if (cloudData.length === 0) {
-                setStatsStatus('Nu s-au găsit răspunsuri în cloud; afișez date locale.');
-                afiseazaDate(local, 'local');
-                return;
-            }
-            setStatsStatus('Datele din cloud au fost încărcate.');
-            var merged = cloudData.slice();
-            for (var j = 0; j < local.length; j++) {
-                merged.push(local[j]);
-            }
-            afiseazaDate(merged, 'cloud');
-        }).catch(function(err) {
-            console.log('Cloud select error:', err);
-            setStatsStatus('Eroare la conectare Supabase; afișez local. ' + (err.message || err));
-            supabaseClient = null;
-            afiseazaDate(local, 'local');
-        });
-    } else {
-        setStatsStatus('Supabase indisponibil; afișez date locale.');
-        afiseazaDate(local, 'local');
-    }
+function toggleQuestionCharts(){
+  chartsVisible=!chartsVisible;
+  var c=getElement('chartsContainer'); if(!c) return;
+  if(chartsVisible){ c.style.display='grid'; renderStatsCharts(lastLoadedData); setStatsStatus('Afișez diagramele fiecărei întrebări.'); }
+  else{ c.style.display='none'; setStatsStatus('Diagramele sunt ascunse.'); }
 }
 
-function getElement(id) {
-    return document.getElementById(id);
+function afiseazaDate(data,source){
+  lastLoadedData=data||[]; lastLoadedSource=source||'local';
+  setInnerText('totalCount',lastLoadedData.length);
+  if(lastLoadedData.length===0){
+    setInnerText('q4Stats','0%');
+    setInnerHTML('chartsContainer','<p>Niciun grafic disponibil.</p>');
+    setInnerHTML('responsesList','<p style="text-align:center">Niciun răspuns încă.</p>');
+    return;
+  }
+  var da=0; for(var i=0;i<lastLoadedData.length;i++){ if(lastLoadedData[i].q4==='Da') da++; }
+  setInnerText('q4Stats',Math.round(da/lastLoadedData.length*100)+'%');
+  if(chartsVisible) renderStatsCharts(lastLoadedData);
+  var h='';
+  for(var j=0;j<lastLoadedData.length;j++){
+    var r=lastLoadedData[j];
+    var rid=(r.id!==undefined)?String(r.id):String(r._id||(r._id='local_'+(new Date().getTime())+'_'+Math.random().toString(36).slice(2,9)));
+    var src=(r.id!==undefined)?'cloud':'local';
+    h+='<div class="rc" data-rid="'+esc(rid)+'" data-src="'+src+'"><div class="rh">#'+(j+1)+' - '+esc(r.nume)+' | '+esc(r.ora)+'</div>';
+    h+='<div><strong>Q4:</strong> '+esc(r.q4)+' | <strong>Q15:</strong> '+esc(r.q15)+'<br><strong>Mesaj:</strong> '+esc(r.q25)+'</div>';
+    h+='<div style="text-align:right"><button class="btn sm s" data-action="view">Vezi</button><button class="btn sm d" data-action="delete">Șterge</button></div></div>';
+  }
+  setInnerHTML('responsesList',h);
+  var list=getElement('responsesList');
+  list.onclick=function(e){
+    var card=e.target.closest('.rc'); if(!card) return;
+    var rid=card.getAttribute('data-rid'), src=card.getAttribute('data-src');
+    var b=e.target.closest('button[data-action="delete"]');
+    if(b){ e.stopPropagation(); deleteSingleResponse(rid,src); return; }
+    showResponseDetails(rid,src);
+  };
 }
 
-function setStatsStatus(message) {
-    var statusEl = getElement('statsStatus');
-    if (statusEl) {
-        statusEl.innerText = message;
-    } else {
-        console.warn('statsStatus element missing:', message);
+function renderStatsCharts(data){
+  var html='';
+  for(var qi=0;qi<Q.length;qi++){
+    var q=Q[qi];
+    if(q[2]==='text'||q[2]==='txt') continue;
+    var counts={};
+    if(q[2]==='yn'){ counts.Da=0; counts.Nu=0; }
+    else if(q[2]==='sel'||q[2]==='c'){ for(var a=0;a<q[3].length;a++) counts[q[3][a]]=0; }
+    else if(q[2]==='r'){ for(var b=0;b<q[3].length;b++) counts[q[3][b][0]]=0; }
+    for(var i=0;i<data.length;i++){
+      var raw=data[i][q[0]]; if(raw===undefined||raw===null||raw==='') continue;
+      var parts=(q[2]==='c')?String(raw).split(','):[String(raw)];
+      for(var p=0;p<parts.length;p++){ var o=parts[p].trim(); if(!o) continue; counts[o]=(counts[o]||0)+1; }
     }
+    html+='<div class="chart-card"><h4>'+(qi+1)+'. '+esc(q[1])+'</h4>';
+    for(var key in counts){
+      if(!counts.hasOwnProperty(key)) continue;
+      var pc=data.length>0?Math.round(counts[key]/data.length*100):0;
+      html+='<div class="bl">'+esc(key)+' ('+counts[key]+' · '+pc+'%)</div><div class="bt"><div class="bf" style="width:'+pc+'%"></div></div>';
+    }
+    html+='</div>';
+  }
+  setInnerHTML('chartsContainer',html);
 }
 
-function toggleQuestionCharts() {
-    chartsVisible = !chartsVisible;
-    var container = getElement('chartsContainer');
-    if (!container) return;
-    if (chartsVisible) {
-        container.style.display = 'grid';
-        renderStatsCharts(lastLoadedData);
-        setStatsStatus('Afișez diagramele fiecarei întrebări.');
-    } else {
-        container.style.display = 'none';
-        setStatsStatus('Diagramele sunt ascunse.');
-    }
+function showResponseDetails(id,source){
+  var item=null;
+  for(var i=0;i<lastLoadedData.length;i++){
+    var it=lastLoadedData[i];
+    if(source==='cloud'&&it.id!==undefined&&String(it.id)===id){ item=it; break; }
+    if(source==='local'&&it._id!==undefined&&String(it._id)===id){ item=it; break; }
+  }
+  if(!item){ alert('Răspunsul nu a fost găsit.'); return; }
+  var h='<h3>Detalii răspuns</h3><div style="max-height:60vh;overflow:auto">';
+  for(var key in item){ if(!item.hasOwnProperty(key)||key==='_id') continue; h+='<div style="margin-bottom:.5rem"><strong>'+esc(key)+':</strong> '+esc(item[key])+'</div>'; }
+  h+='</div>';
+  getElement('detailContent').innerHTML=h;
+  var del=getElement('detailDeleteBtn'); del.style.display=''; del.onclick=function(){ deleteSingleResponse(id,source); };
+  getElement('detailModal').style.display='flex';
+}
+function closeDetailModal(){ getElement('detailModal').style.display='none'; var b=getElement('detailDeleteBtn'); if(b) b.style.display=''; }
+
+function requireDeleteCode(){
+  var cod=prompt('Cod de securitate pentru ștergere:');
+  if(cod===DEV_CODE) return true;
+  if(cod!==null) alert('Cod incorect!');
+  return false;
 }
 
-function setInnerHTML(id, html) {
-    var el = getElement(id);
-    if (!el) {
-        console.warn('Missing element for setInnerHTML:', id);
-        return;
-    }
-    el.innerHTML = html;
+function deleteSingleResponse(id,source){
+  if(!requireDeleteCode()) return;
+  if(source==='cloud'){
+    if(!supabaseClient){ alert('Conexiune cloud indisponibilă.'); return; }
+    if(!confirm('Ștergi acest răspuns din cloud?')) return;
+    supabaseClient.from('raspunsuri').delete().eq('id',id).then(function(){ alert('Răspuns șters din cloud.'); updateStats(); closeDetailModal(); }).catch(function(err){ alert('Eroare la ștergere: '+(err.message||err)); });
+  }else{
+    if(!confirm('Ștergi acest răspuns local?')) return;
+    var local=JSON.parse(localStorage.getItem('antiDrogData2'))||[], f=[];
+    for(var i=0;i<local.length;i++){ if(String(local[i]._id)!==id) f.push(local[i]); }
+    localStorage.setItem('antiDrogData2',JSON.stringify(f));
+    alert('Răspuns șters local.'); updateStats(); closeDetailModal();
+  }
 }
 
-function setInnerText(id, text) {
-    var el = getElement(id);
-    if (!el) {
-        console.warn('Missing element for setInnerText:', id);
-        return;
-    }
-    el.innerText = text;
+function viewLastSubmission(){
+  if(!lastSubmitted){ alert('Nu există informații despre ultima trimitere.'); return; }
+  showResponseDetails(String(lastSubmitted.id),lastSubmitted.source||'local');
 }
 
-function afiseazaDate(dateAnalizate, source) {
-    lastLoadedData = dateAnalizate || [];
-    lastLoadedSource = source || 'local';
-    setInnerText('totalCount', lastLoadedData.length);
-    if (lastLoadedData.length === 0) {
-        setInnerText('q4Stats', "0%");
-        setInnerHTML('chartsContainer', '<p style="text-align:center; padding:1rem;">Niciun grafic disponibil.</p>');
-        setInnerHTML('responsesList', '<p style="text-align:center; padding:1rem;">Niciun răspuns încă.</p>');
-        return;
-    }
-    var auVazutDroguri = 0;
-    for (var i = 0; i < lastLoadedData.length; i++) { if (lastLoadedData[i].q4 === 'Da') auVazutDroguri++; }
-    var proc = Math.round((auVazutDroguri / lastLoadedData.length) * 100);
-    document.getElementById('q4Stats').innerText = proc + "%";
-    if (chartsVisible) {
-        renderStatsCharts(lastLoadedData);
-    }
-    var htmlContent = '';
-    for (var j = 0; j < lastLoadedData.length; j++) {
-        var r = lastLoadedData[j];
-        var rid = (r.id !== undefined) ? String(r.id) : String(r._id || (r._id = 'local_' + (new Date().getTime()) + '_' + Math.random().toString(36).slice(2,9)));
-        var src = (r.id !== undefined) ? 'cloud' : 'local';
-        htmlContent += '<div class="response-card" data-rid="' + rid + '" data-src="' + src + '">';
-        htmlContent += '<div class="response-header">#' + (j + 1) + ' - ' + ascunde(r.nume) + ' | ' + ascunde(r.ora) + '</div>';
-        htmlContent += '<div class="response-details">';
-        htmlContent += '<strong>Q4 (Contact):</strong> ' + ascunde(r.q4) + ' | ' + '<strong>Q15 (Reacție):</strong> ' + ascunde(r.q15) + '<br>' + '<strong>Mesaj:</strong> ' + ascunde(r.q25);
-        htmlContent += '</div>';
-        htmlContent += '<div style="margin-top:0.75rem; text-align:right; display:flex; gap:0.5rem; justify-content:flex-end; flex-wrap:wrap;">';
-        htmlContent += '<button class="btn btn-secondary" style="width:auto; padding:0.5rem 0.75rem;" data-action="view">Vezi</button>';
-        htmlContent += '<button class="btn btn-secondary" style="width:auto; padding:0.5rem 0.75rem; background-color:#e74c3c;" data-action="delete">Șterge</button>';
-        htmlContent += '</div>';
-        htmlContent += '</div>';
-    }
-    setInnerHTML('responsesList', htmlContent);
-    var responsesListEl = getElement('responsesList');
-    if (responsesListEl) {
-        responsesListEl.onclick = function(e) {
-            var card = e.target.closest('.response-card');
-            if (!card) return;
-            var rid = card.getAttribute('data-rid');
-            var src = card.getAttribute('data-src');
-            var btn = e.target.closest('button[data-action="delete"]');
-            if (btn) {
-            e.stopPropagation();
-            var action = btn.getAttribute('data-action');
-            if (action === 'delete') {
-                deleteSingleResponse(rid, src);
-            } else {
-                showResponseDetails(rid, src);
-            }
-            return;
-        }
-        showResponseDetails(rid, src);
-        };
-    }
+function clearDataWithCode(){ if(requireDeleteCode()) showBulkDeleteModal(); }
+
+function showBulkDeleteModal(){
+  var data=lastLoadedSource==='cloud'?lastLoadedData.slice():(JSON.parse(localStorage.getItem('antiDrogData2'))||[]);
+  var h='<h3>Selectează răspunsurile de șters</h3><div style="max-height:60vh;overflow:auto">';
+  for(var i=0;i<data.length;i++){
+    var it=data[i], rid=it.id!==undefined?String(it.id):String(it._id), src=it.id!==undefined?'cloud':'local';
+    h+='<label style="display:block;margin-bottom:.5rem"><input type="checkbox" class="bulk-delete-cb" data-rid="'+esc(rid)+'" data-src="'+src+'"> #'+(i+1)+' - '+esc(it.nume||'Anonim')+' | '+esc(it.ora||'')+'</label>';
+  }
+  h+='</div><div style="margin-top:1rem;text-align:right"><button class="btn sm d" onclick="performBulkDelete()">Șterge selectate</button><button class="btn sm" onclick="closeDetailModal()">Anulează</button></div>';
+  getElement('detailContent').innerHTML=h;
+  getElement('detailDeleteBtn').style.display='none';
+  getElement('detailModal').style.display='flex';
 }
 
-function renderStatsCharts(data) {
-    var total = data.length;
-    var questionDefs = [
-        { key: 'varsta', label: 'Vârstă', type: 'single', options: ['Sub 14 ani','14-16 ani','16-18 ani','Peste 18 ani','Altul'] },
-        { key: 'q3', label: 'Problema consumului este majoră?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q4', label: 'Ți s-a oferit substanță?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q5', label: 'Cunoști persoane cărora le poți cere sprijin?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q6', label: 'Presiunea grupului este principalul motiv?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q7', label: 'Tutun sau alcool facilitează trecerea?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q8', label: 'Drogurile sintetice sunt mai periculoase?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q9', label: 'Ai participat la campanii de informare?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q10', label: 'Fumatul ocazional poate provoca dependență?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q11', label: 'Ai discuta cu părinții în cazul unei probleme?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q12', label: 'Legislația pedepsește deținerea?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q13', label: 'O singură doză este inofensivă?', type: 'single', options: ['Da','Nu, poate fi fatală'] },
-        { key: 'q14', label: 'Mass-media oferă informații realist?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q15', label: 'Ce faci dacă ești presat să încerci o pastilă?', type: 'single', options: ['Refuz ferm','Accept din curiozitate','Părăsesc locația imediat'] },
-        { key: 'q16', label: 'Drogurile afectează performanța școlară?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q17', label: 'Problemele din familie duc la consum?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q18', label: 'Știai de linia TelVerde anti-drog?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q19', label: 'Un dependent se poate recupera singur?', type: 'single', options: ['Da','Nu'] },
-        { key: 'q20', label: 'Refuzi influențele negative?', type: 'single', options: ['Da, îmi asum','Sunt indecis/ă'] },
-        { key: 'q21', label: 'Surse sigure pentru informare', type: 'multi', options: ['Medici','Prieteni','Scoală','Internet'] },
-        { key: 'q22', label: 'Ce consecințe te îngrijorează', type: 'multi', options: ['Sănătate','Închisoare','Familie'] },
-        { key: 'q23', label: 'Accesul la substanțe este', type: 'single', options: ['Foarte usor','Greu'] },
-        { key: 'q24', label: 'Pedepsitele ar trebui să fie mai aspre?', type: 'single', options: ['Da','Nu'] }
-    ];
-
-    function buildBarCard(label, counts, totalForPercent) {
-        var html = '<div class="chart-card"><h4>' + label + '</h4>';
-        for (var opt in counts) {
-            if (!counts.hasOwnProperty(opt)) continue;
-            var value = counts[opt];
-            var percent = totalForPercent > 0 ? Math.round((value / totalForPercent) * 100) : 0;
-            html += '<div class="chart-bar-label">' + ascunde(opt) + ' (' + value + ')</div>';
-            html += '<div class="chart-bar-track"><div class="chart-bar-fill" style="width:' + percent + '%"></div></div>';
-        }
-        html += '</div>';
-        return html;
-    }
-
-    var chartsHtml = '';
-    for (var qi = 0; qi < questionDefs.length; qi++) {
-        var q = questionDefs[qi];
-        var counts = {};
-        for (var oi = 0; oi < q.options.length; oi++) {
-            counts[q.options[oi]] = 0;
-        }
-        var totalForPercent = 0;
-
-        for (var i = 0; i < data.length; i++) {
-            var item = data[i];
-            if (q.type === 'multi') {
-                var raw = item[q.key] || '';
-                var parts = String(raw).split(',');
-                for (var pi = 0; pi < parts.length; pi++) {
-                    var opt = parts[pi].trim();
-                    if (!opt) continue;
-                    if (counts[opt] !== undefined) {
-                        counts[opt]++;
-                    }
-                }
-                totalForPercent = data.length;
-            } else {
-                var value = item[q.key] || '';
-                if (counts[value] !== undefined) {
-                    counts[value]++;
-                } else if (value) {
-                    counts[value] = (counts[value] || 0) + 1;
-                }
-                totalForPercent = data.length;
-            }
-        }
-
-        chartsHtml += buildBarCard(q.label, counts, totalForPercent);
-    }
-
-    setInnerHTML('chartsContainer', chartsHtml);
+function performBulkDelete(){
+  var cbs=document.querySelectorAll('.bulk-delete-cb:checked');
+  if(!cbs.length){ alert('Nu s-a selectat niciun răspuns.'); return; }
+  if(!confirm('Ștergi '+cbs.length+' răspunsuri?')) return;
+  var keep=JSON.parse(localStorage.getItem('antiDrogData2'))||[], cloudIds=[];
+  for(var i=0;i<cbs.length;i++){
+    var rid=cbs[i].getAttribute('data-rid'), src=cbs[i].getAttribute('data-src');
+    if(src==='local'){ for(var k=0;k<keep.length;k++){ if(String(keep[k]._id)===rid){ keep.splice(k,1); k--; } } }
+    else cloudIds.push(rid);
+  }
+  localStorage.setItem('antiDrogData2',JSON.stringify(keep));
+  if(cloudIds.length&&supabaseClient){
+    supabaseClient.from('raspunsuri').delete().in('id',cloudIds).then(function(){ alert('Ștergere finalizată.'); updateStats(); closeDetailModal(); }).catch(function(err){ alert('Eroare la ștergere cloud: '+(err.message||err)); updateStats(); closeDetailModal(); });
+  }else{ alert('Ștergere finalizată.'); updateStats(); closeDetailModal(); }
 }
-
-function showResponseDetails(id, source) {
-    var item = null;
-    for (var i = 0; i < lastLoadedData.length; i++) {
-        var it = lastLoadedData[i];
-        if (source === 'cloud' && it.id !== undefined && String(it.id) === id) { item = it; break; }
-        if (source === 'local' && it._id !== undefined && String(it._id) === id) { item = it; break; }
-    }
-    if (!item) { alert('Răspunsul nu a fost găsit.'); return; }
-    var html = '<h3>Detalii Răspuns</h3>';
-    html += '<div style="max-height:60vh; overflow:auto; padding-top:0.5rem;">';
-    for (var key in item) {
-        if (!item.hasOwnProperty(key)) continue;
-        if (key === '_id') continue;
-        html += '<div style="margin-bottom:0.5rem;"><strong>' + ascunde(key) + ':</strong> ' + ascunde(item[key]) + '</div>';
-    }
-    html += '</div>';
-    document.getElementById('detailContent').innerHTML = html;
-    var delBtn = document.getElementById('detailDeleteBtn');
-    delBtn.onclick = function() { deleteSingleResponse(id, source); };
-    document.getElementById('detailModal').style.display = 'flex';
-}
-
-function closeDetailModal() { document.getElementById('detailModal').style.display = 'none'; var btn = document.getElementById('detailDeleteBtn'); if (btn) btn.style.display = ''; }
-
-function requireDeleteCode() {
-    var cod = prompt("Cod de Securitate pentru ștergere:");
-    if (cod === DEV_CODE) return true;
-    if (cod !== null) alert("Cod incorect!");
-    return false;
-}
-
-function deleteSingleResponse(id, source) {
-    if (!requireDeleteCode()) return;
-    if (source === 'cloud') {
-        if (!supabaseClient) { alert('Conexiune cloud indisponibilă.'); return; }
-        if (!confirm('Ștergi acest răspuns din cloud?')) return;
-        supabaseClient.from('raspunsuri').delete().eq('id', id).then(function(res) { alert('Răspuns șters din Cloud.'); updateStats(); closeDetailModal(); }).catch(function(err) { alert('Eroare la ștergere: ' + (err.message || err)); });
-    } else {
-        if (!confirm('Ștergi acest răspuns local?')) return;
-        var local = JSON.parse(localStorage.getItem('antiDrogData2')) || [];
-        var filtered = [];
-        for (var i = 0; i < local.length; i++) { if (String(local[i]._id) !== id) filtered.push(local[i]); }
-        localStorage.setItem('antiDrogData2', JSON.stringify(filtered));
-        alert('Răspuns șters local.');
-        updateStats();
-        closeDetailModal();
-    }
-}
-
-function viewLastSubmission() {
-    if (!lastSubmitted) { alert('Nu există informații despre ultima trimitere.'); return; }
-    var id = String(lastSubmitted.id);
-    var source = lastSubmitted.source || 'local';
-    if (source === 'local') {
-        var local = JSON.parse(localStorage.getItem('antiDrogData2')) || [];
-        for (var i = 0; i < local.length; i++) { if (String(local[i]._id) === id) { showResponseDetails(id, 'local'); return; } }
-        alert('Răspunsul local nu a fost găsit.');
-        return;
-    }
-    // source === 'cloud'
-    for (var j = 0; j < lastLoadedData.length; j++) { if (lastLoadedData[j].id !== undefined && String(lastLoadedData[j].id) === id) { showResponseDetails(id, 'cloud'); return; } }
-    if (!supabaseClient) { alert('Conexiune cloud indisponibilă pentru a prelua răspunsul.'); return; }
-    supabaseClient.from('raspunsuri').select('*').eq('id', id).then(function(res) {
-        if (res.error) { alert('Eroare la preluare: ' + (res.error.message || res.error)); return; }
-        var d = res.data && res.data[0] ? res.data[0] : null;
-        if (!d) { alert('Răspunsul nu a fost găsit în cloud.'); return; }
-        // Temporar adaug în lastLoadedData pentru a putea afișa și valida
-        lastLoadedData = lastLoadedData || [];
-        lastLoadedData.push(d);
-        showResponseDetails(id, 'cloud');
-    }).catch(function(err) { alert('Eroare la preluare: ' + (err.message || err)); });
-}
-
-function clearDataWithCode() {
-    if (requireDeleteCode()) {
-        showBulkDeleteModal();
-    }
-}
-
-function showBulkDeleteModal() {
-    var data = lastLoadedSource === 'cloud' ? (lastLoadedData.slice() || []) : (JSON.parse(localStorage.getItem('antiDrogData2')) || []);
-    for (var i = 0; i < data.length; i++) { if (!data[i]._id && data[i].id === undefined) data[i]._id = 'local_' + (new Date().getTime()) + '_' + Math.random().toString(36).slice(2,9); }
-    var html = '<h3>Selectează răspunsurile de șters</h3>';
-    html += '<div style="max-height:60vh; overflow:auto; padding-top:0.5rem;">';
-    for (var i = 0; i < data.length; i++) {
-        var it = data[i];
-        var rid = it.id !== undefined ? String(it.id) : String(it._id);
-        var src = it.id !== undefined ? 'cloud' : 'local';
-        html += '<label style="display:block; margin-bottom:0.5rem;"><input type="checkbox" class="bulk-delete-cb" data-rid="' + rid + '" data-src="' + src + '"> #' + (i+1) + ' - ' + ascunde(it.nume||'Anonim') + ' | ' + ascunde(it.ora||'') + '</label>';
-    }
-    html += '</div>';
-    html += '<div style="margin-top:1rem; text-align:right;">';
-    html += '<button class="btn btn-secondary" onclick="performBulkDelete()">Șterge selectate</button> ';
-    html += '<button class="btn" onclick="closeDetailModal()">Anulează</button>';
-    html += '</div>';
-    document.getElementById('detailContent').innerHTML = html;
-    document.getElementById('detailDeleteBtn').style.display = 'none';
-    document.getElementById('detailModal').style.display = 'flex';
-}
-
-function performBulkDelete() {
-    var cbs = document.querySelectorAll('.bulk-delete-cb:checked');
-    if (!cbs.length) { alert('Nu s\'a selectat niciun răspuns.'); return; }
-    if (!confirm('Ștergi ' + cbs.length + ' răspunsuri?')) return;
-    var localToKeep = JSON.parse(localStorage.getItem('antiDrogData2')) || [];
-    var cloudIds = [];
-    for (var i = 0; i < cbs.length; i++) {
-        var rid = cbs[i].getAttribute('data-rid');
-        var src = cbs[i].getAttribute('data-src');
-        if (src === 'local') {
-            for (var k = 0; k < localToKeep.length; k++) {
-                if (String(localToKeep[k]._id) === rid) { localToKeep.splice(k, 1); k--; }
-            }
-        } else {
-            cloudIds.push(rid);
-        }
-    }
-    localStorage.setItem('antiDrogData2', JSON.stringify(localToKeep));
-    if (cloudIds.length && supabaseClient) {
-        supabaseClient.from('raspunsuri').delete().in('id', cloudIds).then(function() { alert('Ștergere finalizată.'); updateStats(); closeDetailModal(); }).catch(function(err) { alert('Eroare la ștergere cloud: ' + (err.message || err)); updateStats(); closeDetailModal(); });
-    } else {
-        alert('Ștergere finalizată.'); updateStats(); closeDetailModal();
-    }
-}
-
 </script>
-
 </body>
 </html>
