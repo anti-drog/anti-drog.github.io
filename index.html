@@ -63,12 +63,12 @@ p{font-size:1.05rem;margin:0 0 1rem}
 .fg{background:var(--w);border:4px solid var(--k);padding:1rem;margin-bottom:1.4rem;box-shadow:6px 6px 0 var(--k)}
 .fg:nth-of-type(3n){background:#fff6a8;transform:rotate(-.5deg)}.fg:nth-of-type(3n+1){transform:rotate(.4deg)}
 .fg.miss{border-color:var(--r);box-shadow:6px 6px 0 var(--r)}
-.fg label.q{display:block;font-weight:bold;font-size:1.1rem;margin-bottom:.8rem}
+.fg label.q{display:block;font-weight:bold;font-size:1.1rem;margin-bottom:.8rem;overflow-wrap:anywhere}
 .fg label.q span{background:var(--k);color:var(--y);padding:0 .35em;margin-right:.3em;font-family:Impact,sans-serif}
-.opt{display:block;padding:.6rem .8rem .6rem 2.4rem;margin-bottom:.4rem;border:3px solid var(--k);background:var(--w);cursor:pointer;position:relative}
+.opt{display:block;padding:.6rem .8rem .6rem 2.4rem;margin-bottom:.4rem;border:3px solid var(--k);background:var(--w);cursor:pointer;position:relative;overflow-wrap:anywhere}
 .opt:hover{background:var(--g)}.opt:has(input:checked){background:var(--k);color:var(--y)}
 .opt input{position:absolute;left:.8rem;top:50%;transform:translateY(-50%);accent-color:var(--r)}
-input[type=text],select,textarea{width:100%;padding:.8rem;border:4px solid var(--k);font:inherit;background:var(--w);border-radius:0}
+input[type=text],select,textarea{width:100%;max-width:100%;padding:.8rem;border:4px solid var(--k);font:inherit;background:var(--w);border-radius:0}
 input[type=text]:focus,select:focus,textarea:focus{outline:none;background:var(--y);box-shadow:6px 6px 0 var(--r)}
 .free{margin-top:.6rem;border-style:dashed!important}
 .stat{background:var(--w);border:4px solid var(--k);padding:1rem;margin-bottom:1rem;box-shadow:6px 6px 0 var(--k)}
@@ -87,7 +87,23 @@ input[type=text]:focus,select:focus,textarea:focus{outline:none;background:var(-
 #detailModal>div{background:var(--w);border:5px solid var(--k);box-shadow:10px 10px 0 var(--r);max-width:700px;width:92%;padding:1.2rem;position:relative}
 .x{position:absolute;right:.5rem;top:.5rem;background:var(--r);color:var(--w);border:3px solid var(--k);font-size:1.2rem;cursor:pointer;width:38px;height:38px}
 footer{background:var(--k);color:var(--y);text-align:center;padding:1.5rem;font-weight:bold}
-@media(max-width:600px){.myth{grid-template-columns:1fr}.hero img{width:90%}}
+@media(max-width:600px){
+  .myth{grid-template-columns:1fr}
+  .hero img{width:90%}
+  #formPage .section{padding:1rem .8rem;box-shadow:6px 6px 0 var(--k);transform:none!important}
+  #formPage h2{font-size:1.5rem;transform:none}
+  #formPage h3{font-size:1.15rem;line-height:1.3}
+  #formPage p{font-size:.95rem}
+  #formPage .prog{padding:.45rem .65rem;font-size:.9rem}
+  #formPage .part{font-size:1.15rem;padding:.55rem .75rem;margin:1.1rem 0 .9rem;transform:none}
+  #formPage .part small{font-size:.82rem;margin-top:.25rem}
+  #formPage .fg{padding:.85rem .75rem;margin-bottom:1rem;box-shadow:4px 4px 0 var(--k);transform:none!important}
+  #formPage .fg label.q{font-size:1rem;line-height:1.35;margin-bottom:.65rem}
+  #formPage .opt{padding:.7rem .75rem .7rem 2.5rem;margin-bottom:.5rem;font-size:.95rem;line-height:1.35;min-height:44px}
+  #formPage .opt input{left:.75rem;width:18px;height:18px}
+  #formPage input[type=text],#formPage select,#formPage textarea{padding:.75rem;font-size:16px;border-width:3px}
+  #formPage .btn{font-size:1.1rem;padding:.85rem .75rem;box-shadow:5px 5px 0 var(--k);margin-top:.9rem}
+}
 @media(prefers-reduced-motion:reduce){*{animation:none!important}}
 </style>
 <script type="module">
@@ -480,73 +496,42 @@ function showResponseDetails(id,source){
   }
   if(!item){ alert('Răspunsul nu a fost găsit.'); return; }
   var h='<h3>Detalii răspuns</h3><div style="max-height:60vh;overflow:auto">';
-  for(var key in item){ if(!item.hasOwnProperty(key)||key==='_id') continue; h+='<div style="margin-bottom:.5rem"><strong>'+esc(key)+':</strong> '+esc(item[key])+'</div>'; }
+  for(var key in item){
+    if(!item.hasOwnProperty(key)||key==='_id'||key==='id') continue;
+    h+='<div style="margin-bottom:.5rem"><strong>'+esc(key)+':</strong> '+esc(item[key])+'</div>';
+  }
   h+='</div>';
-  getElement('detailContent').innerHTML=h;
-  var del=getElement('detailDeleteBtn'); del.style.display=''; del.onclick=function(){ deleteSingleResponse(id,source); };
-  getElement('detailModal').style.display='flex';
+  setInnerHTML('detailContent',h);
+  var delBtn=getElement('detailDeleteBtn');
+  if(delBtn){
+    delBtn.onclick=function(){ deleteSingleResponse(id,source); closeDetailModal(); };
+  }
+  var modal=getElement('detailModal');
+  if(modal) modal.style.display='flex';
 }
 
-function closeDetailModal(){ getElement('detailModal').style.display='none'; var b=getElement('detailDeleteBtn'); if(b) b.style.display=''; }
-
-function requireDeleteCode(){
-  var cod=prompt('Cod de securitate pentru ștergere:');
-  if(cod===DEV_CODE) return true;
-  if(cod!==null) alert('Cod incorect!');
-  return false;
+function closeDetailModal(){
+  var modal=getElement('detailModal');
+  if(modal) modal.style.display='none';
 }
 
 function deleteSingleResponse(id,source){
-  if(!requireDeleteCode()) return;
-  if(source==='cloud'){
-    if(!supabaseClient){ alert('Conexiune cloud indisponibilă.'); return; }
-    if(!confirm('Ștergi acest răspuns din cloud?')) return;
-    supabaseClient.from('raspunsuri').delete().eq('id',id).then(function(){ alert('Răspuns șters din cloud.'); updateStats(); closeDetailModal(); }).catch(function(err){ alert('Eroare la ștergere: '+(err.message||err)); });
-  }else{
-    if(!confirm('Ștergi acest răspuns local?')) return;
-    var local=JSON.parse(localStorage.getItem('antiDrogData2'))||[], f=[];
-    for(var i=0;i<local.length;i++){ if(String(local[i]._id)!==id) f.push(local[i]); }
-    localStorage.setItem('antiDrogData2',JSON.stringify(f));
-    alert('Răspuns șters local.'); updateStats(); closeDetailModal();
+  var cod=prompt('Introdu codul de administrator pentru ștergere:');
+  if(cod!==DEV_CODE){ alert('Cod incorect.'); return; }
+  if(source==='local'){
+    var db=JSON.parse(localStorage.getItem('antiDrogData2'))||[];
+    var next=[];
+    for(var i=0;i<db.length;i++){ if(String(db[i]._id)!==String(id)) next.push(db[i]); }
+    localStorage.setItem('antiDrogData2',JSON.stringify(next));
+    updateStats();
+    return;
   }
-}
-
-function clearDataWithCode(){ if(requireDeleteCode()) showBulkDeleteModal(); }
-
-function showBulkDeleteModal(){
-  var data=lastLoadedSource==='cloud'?lastLoadedData.slice():(JSON.parse(localStorage.getItem('antiDrogData2'))||[]);
-  var h='<h3>Selectează răspunsurile de șters</h3><div style="max-height:60vh;overflow:auto">';
-  for(var i=0;i<data.length;i++){
-    var it=data[i], rid=it.id!==undefined?String(it.id):String(it._id), src=it.id!==undefined?'cloud':'local';
-    h+='<label class="opt"><input type="checkbox" class="bulkDelCb" data-rid="'+esc(rid)+'" data-src="'+src+'"> #'+(i+1)+' - '+esc(it.nume||'Anonim')+' ('+esc(it.ora||'')+')</label>';
-  }
-  h+='</div><div style="margin-top:1rem;text-align:right"><button type="button" class="btn sm d" onclick="runBulkDelete()">Șterge selectate</button></div>';
-  getElement('detailContent').innerHTML=h;
-  var del=getElement('detailDeleteBtn'); if(del) del.style.display='none';
-  getElement('detailModal').style.display='flex';
-}
-
-function runBulkDelete(){
-  var boxes=document.querySelectorAll('.bulkDelCb:checked');
-  if(!boxes.length){ alert('Nu ai selectat nimic.'); return; }
-  if(!confirm('Ștergi '+boxes.length+' răspunsuri?')) return;
-  var local=JSON.parse(localStorage.getItem('antiDrogData2'))||[];
-  var cloudIds=[], localIds=[];
-  for(var i=0;i<boxes.length;i++){
-    var rid=boxes[i].getAttribute('data-rid'), src=boxes[i].getAttribute('data-src');
-    if(src==='cloud') cloudIds.push(rid); else localIds.push(rid);
-  }
-  var keptLocal=[];
-  for(var j=0;j<local.length;j++){ if(localIds.indexOf(String(local[j]._id))===-1) keptLocal.push(local[j]); }
-  localStorage.setItem('antiDrogData2',JSON.stringify(keptLocal));
-  if(cloudIds.length && supabaseClient){
-    supabaseClient.from('raspunsuri').delete().in('id',cloudIds).then(function(){
-      closeDetailModal(); updateStats();
-    }).catch(function(err){
-      alert('Eroare ștergere cloud: '+(err.message||err));
-      closeDetailModal(); updateStats();
+  if(source==='cloud'&&supabaseClient){
+    supabaseClient.from('raspunsuri').delete().eq('id',id).then(function(res){
+      if(res.error){ alert('Eroare la ștergere: '+res.error.message); return; }
+      updateStats();
     });
-  }else{ closeDetailModal(); updateStats(); }
+  }
 }
 </script>
 </body>
